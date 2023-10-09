@@ -14,5 +14,4 @@ struct Organization : Identifiable {
 }
 extension Organization {
     static var dummy = Organization(id: 1, title: "Es un título dummy", img: "CanonSumidero")
-    
 }

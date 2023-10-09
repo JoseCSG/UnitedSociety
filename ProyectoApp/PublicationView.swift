@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct PublicationView: View {
     @State var upvote: Bool = false
@@ -45,7 +46,7 @@ struct PublicationView: View {
                                 .padding(.bottom, 1)
                             Spacer()
                         }
-                        Image(publication.img)
+                        KFImage(URL(string: publication.img))
                             .resizable()
                             .frame(height: 180)
                         HStack {

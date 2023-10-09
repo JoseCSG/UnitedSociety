@@ -11,6 +11,8 @@ import SwiftData
 struct ContentView: View {
     @State private var showPostView = false
     @State var selectedTab: Tab = .home
+    var publicationModel = PublicationModel()
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         ZStack {
@@ -28,6 +30,9 @@ struct ContentView: View {
                 Spacer()
                // TabView(selectedTab: $selectedTab)
             }
+        }
+        .onAppear{
+            publicationModel.fetchPublications()
         }
     }
 }

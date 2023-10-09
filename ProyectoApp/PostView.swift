@@ -16,7 +16,9 @@ struct PostView: View {
     @State private var description = ""
     @State private var selectedImageItem: PhotosPickerItem? = nil
     @State private var selectedImage: Image? = nil
-    
+    @State private var selectedUIImage: UIImage? = nil
+    var publicationModel = PublicationModel()
+
     var body: some View {
         
         VStack {
@@ -38,10 +40,7 @@ struct PostView: View {
             
             
             Button {
-                let newPub = Publication(title: title, img: "CanonSumidero", likes: 0, descption: description)
-                modelContext.insert(newPub)
-                title = ""
-                description = ""
+                addPub()
             } label: {
                 Text("Enviar")
                     .padding()
@@ -57,6 +56,7 @@ struct PostView: View {
                     if let data = try? await selectedImageItem?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
                             selectedImage = Image(uiImage: uiImage)
+                            selectedUIImage = uiImage
                             return
                         }
                     }
@@ -68,11 +68,7 @@ struct PostView: View {
     
     private func addPub(){
         withAnimation {
-            let newPub = Publication(title: title, img: "CanonSumidero", likes: 0, descption: description)
-            modelContext.insert(newPub)
-            title = ""
-            description = ""
-            
+            publicationModel.postPublication(title: title, description: description, img: selectedUIImage!)
         }
     }
 }
