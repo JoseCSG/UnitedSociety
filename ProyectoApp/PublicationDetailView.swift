@@ -120,5 +120,5 @@ struct PublicationDetailView: View {
 }
 
 #Preview{
-    PublicationDetailView(publication: Publication(title: "Titulo dummy", img: "CanonSumidero", likes: 0, descption: "Una descripcion dummy", id: "32423"))
+    PublicationDetailView(publication: Publication(title: "Titulo dummy", img: "CanonSumidero", likes: 0, descption: "Una descripcion dummy", _id_mongo: "32423"))
 }

@@ -27,7 +27,7 @@ class PublicationModel {
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, id: pub.1["_id"]["$oid"].stringValue)
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue)
                 print(publication.id)
                 self.publications.append(publication)
             }
