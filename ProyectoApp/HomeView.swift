@@ -2,9 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var feed:Bool = true;
-    @State var pubs = [
-        Publication(title: "Primer Título", img: "Space", likes: 2, descption: "Una descripción generica"),
-        Publication(title: "Segundo Título", img: "CanonSumidero", likes: 20, descption: "La descripción de la segunda publicación")]
+
     var body: some View {
         NavigationView{
             GeometryReader { geo in
@@ -12,7 +10,7 @@ struct HomeView: View {
                     VStack(spacing: 0){
                         VStack{
                             HStack{
-                                Image("IconEmpresa")
+                                Image("LogoYCO")
                                     .resizable()
                                     .frame(width: 35, height: 35)
                                     .clipShape(.circle)
@@ -20,7 +18,7 @@ struct HomeView: View {
                                         Circle()
                                             .stroke(Color.black, lineWidth:2))
                                     .padding(.leading, 20)
-                                    .padding(.bottom, 15)
+                                    .padding(.bottom, 20)
                                 Spacer()
                                 NavigationLink{
                                     ProfileView()
@@ -33,7 +31,7 @@ struct HomeView: View {
                                             Circle()
                                                 .stroke(Color.black, lineWidth:2))
                                         .padding(.trailing, 20)
-                                        .padding(.bottom, 15)
+                                        .padding(.bottom, 20)
                                 }
                             }
                             HStack{
