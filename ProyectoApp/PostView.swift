@@ -10,6 +10,7 @@ import Alamofire
 import PhotosUI
 
 struct PostView: View {
+  
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismis
     @State private var title = ""
@@ -17,7 +18,7 @@ struct PostView: View {
     @State private var selectedImageItem: PhotosPickerItem? = nil
     @State private var selectedImage: Image? = nil
     @State private var selectedUIImage: UIImage? = nil
-    var publicationModel = PublicationModel()
+     var publicationModel = PublicationModel()
 
     var body: some View {
         

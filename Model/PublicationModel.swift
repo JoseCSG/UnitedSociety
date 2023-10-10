@@ -10,21 +10,21 @@ import SwiftData
 
 @Model
 final class Publication {
-    var id = UUID()
+    var id: String
     var title: String
     var img: String
     var likes: Int
     var descption: String
-    init(title: String, img: String, likes: Int, descption: String) {
+    init(title: String, img: String, likes: Int, descption: String, id:String) {
         self.title = title
         self.img = img
         self.likes = likes
         self.descption = descption
-        
+        self.id = id
     }
 }
 extension Publication {
-    static var dummy = Publication(title: "Es un título dummy", img: "CanonSumidero", likes: 20, descption: "Esta es la descripción del dummy, esta puede ser muy muy larga")
+    static var dummy = Publication(title: "Es un título dummy", img: "CanonSumidero", likes: 20, descption: "Esta es la descripción del dummy, esta puede ser muy muy larga", id: "23423")
 }
 
 

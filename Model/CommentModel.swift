@@ -7,7 +7,7 @@
 
 import Foundation
 struct Comment : Identifiable {
-    var id: Int
+    var id: String
     var comment: String
     var likes: Int
 }

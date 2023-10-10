@@ -19,7 +19,7 @@ class PublicationModel {
 
     init (){}
     let storage = Storage.storage()
-    let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY4ODcxNDEsImV4cCI6MTY5Nzc1MTE0MSwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.iL6twQRJDJiH-6JZWWBxd6tmVSwEklnqr-Fv_f32wXA", "Accept": "application/json", "Content-Type": "application/json" ]
+    let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5NzMyNTYsImV4cCI6MTY5NzgzNzI1NiwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.z9yU_sAdwzEkkg1XQfYrkUCAhYkDbbuEHoWlJZgdcAA", "Accept": "application/json", "Content-Type": "application/json" ]
 
     func fetchPublications(){
         publications.removeAll()
@@ -27,7 +27,8 @@ class PublicationModel {
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue)
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, id: pub.1["_id"]["$oid"].stringValue)
+                print(publication.id)
                 self.publications.append(publication)
             }
         }
@@ -95,5 +96,15 @@ class PublicationModel {
     }
     
     func fetchCommentsPub(id: Int){
+        comments.removeAll()
+        let url = "http://127.0.0.1:5000/comment/\(id)"
+        AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
+            let json = try! JSON(data: data.data!)
+            for comm in json {
+                let comment = Comment(id: comm.1["_id"]["$oid"].stringValue, comment: comm.1["comment"].stringValue, likes: comm.1["likes"].intValue)
+                self._comments.append(comment)
+            }
+        }
+
     }
 }

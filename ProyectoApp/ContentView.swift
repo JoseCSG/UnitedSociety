@@ -14,7 +14,7 @@ struct ContentView: View {
     var publicationModel = PublicationModel()
     @Environment(\.modelContext) private var modelContext
 
-    var body: some View {
+    var body: some View{
         ZStack {
             VStack {
                 switch selectedTab {
@@ -39,5 +39,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [Publication.self], inMemory: true)
+           .modelContainer(for: [Publication.self], inMemory: true)
 }

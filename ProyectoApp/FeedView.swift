@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct FeedView: View {
-    @Environment(\.modelContext) private var modelContext
+    //  @Environment(\.modelContext) private var modelContext
     @Query private var Publications: [Publication]
     var publicationModel = PublicationModel()
     var body: some View {
@@ -39,5 +39,5 @@ struct FeedView: View {
 
 #Preview {
     FeedView()
-        .modelContainer(for: [Publication.self], inMemory: true)
+    //  .modelContainer(for: [Publication.self], inMemory: true)
 }
