@@ -15,6 +15,8 @@ import FirebaseStorage
 @Observable
 class PublicationModel {
     var publications = [Publication]()
+    var comments = [Comment]()
+
     init (){}
     let storage = Storage.storage()
     let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY4ODcxNDEsImV4cCI6MTY5Nzc1MTE0MSwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.iL6twQRJDJiH-6JZWWBxd6tmVSwEklnqr-Fv_f32wXA", "Accept": "application/json", "Content-Type": "application/json" ]
@@ -91,6 +93,7 @@ class PublicationModel {
             }
         }
     }
-
     
+    func fetchCommentsPub(id: Int){
+    }
 }

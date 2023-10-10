@@ -15,12 +15,12 @@ final class Publication {
     var img: String
     var likes: Int
     var descption: String
-    
     init(title: String, img: String, likes: Int, descption: String) {
         self.title = title
         self.img = img
         self.likes = likes
         self.descption = descption
+        
     }
 }
 extension Publication {

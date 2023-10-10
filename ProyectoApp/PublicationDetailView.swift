@@ -87,7 +87,7 @@ struct PublicationDetailView: View {
                             .resizable()
                             .frame(height: 20)
                             .frame(width: 20)
-                        Text("20")
+                        Text("4")
                             .padding(.trailing, -0)
                         Text("Comentarios")
                         Spacer()

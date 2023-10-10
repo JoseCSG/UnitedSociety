@@ -10,8 +10,6 @@ import SwiftData
 
 struct FeedView: View {
     @Environment(\.modelContext) private var modelContext
-    @State var pubs = [
-        Publication(title: "Primer Título", img: "Space", likes: 2, descption: "Una descripción generica")]
     @Query private var Publications: [Publication]
     var publicationModel = PublicationModel()
     var body: some View {
