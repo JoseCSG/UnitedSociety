@@ -5,7 +5,8 @@ struct PublicationDetailView: View {
     @State var upvote: Bool = false
     @State var downvote: Bool = false
     var publication: Publication
-
+    var comments =  PublicationModel()
+    
     func like() {
         if !upvote {
             publication.likes += 1
@@ -110,15 +111,17 @@ struct PublicationDetailView: View {
                     .padding(.trailing, 320)
             }
             ScrollView(.vertical){
-                CommentView(upvote: false, downvote: false)
-                CommentView(upvote: false, downvote: false)
-                CommentView(upvote: false, downvote: false)
-                CommentView(upvote: false, downvote: false)
+                ForEach(comments.comments){ com in
+                    CommentView(upvote: false, downvote: false, name: com.name, likes: com.likes, comment: com.comment)
+                }
             }
+        }
+        .onAppear{
+            comments.fetchCommentsPub(id: publication._id_mongo)
         }
     }
 }
 
 #Preview{
-    PublicationDetailView(publication: Publication(title: "Titulo dummy", img: "CanonSumidero", likes: 0, descption: "Una descripcion dummy", _id_mongo: "32423"))
+    PublicationDetailView(publication: Publication(title: "Titulo dummy", img: "CanonSumidero", likes: 0, descption: "Una descripcion dummy", _id_mongo: "65249958f1af19c2f89ca73e"))
 }

@@ -10,16 +10,19 @@ import SwiftUI
 struct CommentView: View {
     @State var upvote: Bool
     @State var downvote: Bool
+    @State var name: String
+    @State var likes: Int
+    @State var comment: String
     var body: some View {
         
         ZStack{
             Color.lightgray
             VStack{
-                Text("Nombre de quien escribio")
+                Text(name)
                     .bold()
                     .padding(.trailing, 150)
                     .padding(.bottom, 10)
-                Text("Comentario")
+                Text(comment)
                     .font(.callout)
                 HStack {
                     Button(action: {}) {
@@ -38,7 +41,7 @@ struct CommentView: View {
                                 .padding(.leading)
                         }
                     }
-                    Text(String(20))
+                    Text(String(likes))
                     Button(action: {}) {
                         if(downvote){
                             Image("ArrowClicked")
@@ -65,5 +68,5 @@ struct CommentView: View {
 }
 
 #Preview {
-    CommentView(upvote: false, downvote: false)
+    CommentView(upvote: false, downvote: false, name: "Name placeholder", likes: 10, comment: "Comment placeholder")
 }

@@ -10,4 +10,5 @@ struct Comment : Identifiable {
     var id: String
     var comment: String
     var likes: Int
+    var name: String
 }
