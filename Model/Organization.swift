@@ -14,7 +14,7 @@ import SwiftyJSON
 class OrganizationModel {
     var organizations = [Organization]()
     init (){}
-    let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY4ODAzNTEsImV4cCI6MTY5Njk2Njc1MSwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.9JR8MuzrUysY4iZ0o91IbcMo_1tG9w73AX1ZDb72cF8", "Accept": "application/json", "Content-Type": "application/json" ]
+    let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5NzMyNTYsImV4cCI6MTY5NzgzNzI1NiwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.z9yU_sAdwzEkkg1XQfYrkUCAhYkDbbuEHoWlJZgdcAA", "Accept": "application/json", "Content-Type": "application/json" ]
 
     func fetchOrganizations(){
         organizations.removeAll()
@@ -22,13 +22,11 @@ class OrganizationModel {
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for org in json {
-                print(org.1["name"].stringValue)
-                let org = Organization(id: org.1["_id"].intValue,
-                                       title: org.1["name"].stringValue, img: org.1["img_url"].stringValue)
-                self.organizations.append(org)
+                let orga = Organization(id: org.1["_id"]["$oid"].stringValue, name: org.1["name"].stringValue, img: org.1["img_src"].stringValue, latitud: org.1["latitud"].doubleValue, longitud: org.1["longitud"].doubleValue
+                )
+                self.organizations.append(orga)
             }
         }
     }
-    
 }
 

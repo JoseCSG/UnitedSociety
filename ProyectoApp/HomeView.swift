@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var feed:Bool = true;
-
+    @Binding var publicationModel: PublicationModel
     var body: some View {
         NavigationView{
             GeometryReader { geo in
@@ -12,29 +12,12 @@ struct HomeView: View {
                             HStack{
                                 Image("LogoYCO")
                                     .resizable()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: 40, height: 40)
                                     .clipShape(.circle)
                                     .overlay(
                                         Circle()
                                             .stroke(Color.black, lineWidth:2))
-                                    .padding(.leading, 20)
-                                    .padding(.bottom, 20)
-                                Spacer()
-                                NavigationLink{
-                                    ProfileView()
-                                } label: {
-                                    Image("ProfileImage")
-                                        .resizable()
-                                        .frame(width: 35, height: 35)
-                                        .clipShape(.circle)
-                                        .overlay(
-                                            Circle()
-                                                .stroke(Color.black, lineWidth:2))
-                                        .padding(.trailing, 20)
-                                        .padding(.bottom, 20)
-                                }
-                            }
-                            HStack{
+                                    .padding(.leading, 10)
                                 Button {
                                     feed = true;
                                 } label: {
@@ -52,11 +35,23 @@ struct HomeView: View {
                                         .tint(.black)
                                         .modifier(SelectedStyleOrgs(isSelected: !feed))
                                 }
+                                NavigationLink{
+                                    ProfileView()
+                                } label: {
+                                    Image("ProfileImage")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(.circle)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.black, lineWidth:2))
+                                        .padding(.trailing, 10)
+                                }
                             }
                         }.frame(height: geo.size.height/7)
                         ZStack{
                             if(feed){
-                                FeedView()
+                                FeedView(publicationModel: $publicationModel)
                                     .frame(height: 7*geo.size.height/8)
                             }
                             else {
@@ -118,9 +113,4 @@ struct SelectedStyleOrgs: ViewModifier {
                 .transition(.opacity))
         }
     }
-}
-
-
-#Preview {
-    HomeView()
 }

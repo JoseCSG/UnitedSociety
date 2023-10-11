@@ -8,24 +8,22 @@
 import SwiftUI
 
 struct CommentView: View {
-    @State var upvote: Bool
-    @State var downvote: Bool
-    @State var name: String
-    @State var likes: Int
-    @State var comment: String
+    @State var upvote: Bool = false
+    @State var downvote: Bool = false
+    @State var comm: Comment
     var body: some View {
         
         ZStack{
             Color.lightgray
             VStack{
-                Text(name)
+                Text(comm.name)
                     .bold()
                     .padding(.trailing, 150)
                     .padding(.bottom, 10)
-                Text(comment)
+                Text(comm.comment)
                     .font(.callout)
                 HStack {
-                    Button(action: {}) {
+                    Button(action: {print(comm)}) {
                         if(upvote){
                             Image("ArrowClicked")
                                 .resizable()
@@ -41,7 +39,7 @@ struct CommentView: View {
                                 .padding(.leading)
                         }
                     }
-                    Text(String(likes))
+                    Text(String(comm.likes))
                     Button(action: {}) {
                         if(downvote){
                             Image("ArrowClicked")
@@ -65,8 +63,4 @@ struct CommentView: View {
         .frame(height: 100)
         .padding(.bottom, 10)
     }
-}
-
-#Preview {
-    CommentView(upvote: false, downvote: false, name: "Name placeholder", likes: 10, comment: "Comment placeholder")
 }

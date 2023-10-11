@@ -17,7 +17,7 @@ struct ProfileView: View {
                 Color(red: 55/255, green: 94/255, blue: 152/255)
                 VStack{
                     VStack {
-                        MapView()
+                        MapView(latitud: -21.2423, longitud: 23.3242)
                             .ignoresSafeArea(edges: .top)
                             .frame(height: 200)
                         

@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct OrganizationsView: View {
     var dummyPublication = Publication.dummy
     @State private var searchText = ""
-    
+    @State var upvote: Bool = false
+    @State var downvote: Bool = false
+    var organizationModel = OrganizationModel()
     var body: some View {
         NavigationView{
             VStack{
@@ -31,36 +34,19 @@ struct OrganizationsView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false){
                         HStack(spacing: 10){
-                           
-                            NavigationLink(destination: OrgaProfileView()){
-                                Image("IconEmpresa")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
+                            ForEach(organizationModel.organizations){ org in
+                                NavigationLink(destination: OrgaProfileView(org: org)){
+                                    KFImage(URL(string: org.img))
+                                        .resizable()
+                                        .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
+                                        .clipShape(.circle)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.black, lineWidth:2))
+                                }
                             }
-                            NavigationLink(destination: OrgaProfileView()){
-                                Image("IconEmpresa2")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                            }
-                            NavigationLink(destination: OrgaProfileView()){
-                                Image("IconEmpresa3")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                            }
-                            NavigationLink(destination: OrgaProfileView()){
-                                Image("IconEmpresa4")
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                                //Aqui
-                                
-                            }
-                                
-                            
-                            .padding(.horizontal, 20)
+                                                            
+                            .padding(.horizontal, 10)
                             
                         }
                         .padding(.vertical, 20)
@@ -115,7 +101,7 @@ struct OrganizationsView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
                             ForEach(0..<5) { index in
-                                NavigationLink(destination: PublicationView(publication: dummyPublication)){
+                                NavigationLink(destination: PublicationView(publication: Publication.dummy)){
                                     Image("CanonSumidero")
                                         .resizable()
                                         .frame(width: 150, height: 150)
@@ -139,6 +125,9 @@ struct OrganizationsView: View {
                     //            }
                     
                 }
+            }
+            .onAppear {
+                organizationModel.fetchOrganizations()
             }
             
         }

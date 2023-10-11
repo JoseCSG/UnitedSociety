@@ -20,15 +20,16 @@ class PublicationModel {
     init (){}
     let storage = Storage.storage()
     let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5NzMyNTYsImV4cCI6MTY5NzgzNzI1NiwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.z9yU_sAdwzEkkg1XQfYrkUCAhYkDbbuEHoWlJZgdcAA", "Accept": "application/json", "Content-Type": "application/json" ]
-
+    
     func fetchPublications(){
         publications.removeAll()
         let url = "http://127.0.0.1:5000/publication/"
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue)
-                print(publication)
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue,
+                                              id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue
+                )
                 self.publications.append(publication)
             }
         }
@@ -40,8 +41,19 @@ class PublicationModel {
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue)
-                print(publication)
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue)
+                self.publications.append(publication)
+            }
+        }
+    }
+    
+    func fetchPublicationsOrg(id: String){
+        publications.removeAll()
+        let url = "http://127.0.0.1:5000/publication/org/\(id)"
+        AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
+            let json = try! JSON(data: data.data!)
+            for pub in json {
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue)
                 self.publications.append(publication)
             }
         }
@@ -81,24 +93,24 @@ class PublicationModel {
             completion(nil)
         }
     }
-
-    func postPublication(title: String, description: String, img: UIImage){
+    
+    func postPublication(title: String, description: String, img: UIImage, org_id: String){
         let imageName = UUID().uuidString // Generating a unique name for the image
         uploadToFirestore(img: img, name: imageName) { [weak self] downloadURL in
             guard let self = self, let imageUrl = downloadURL?.absoluteString else {
                 print("Error getting download URL.")
                 return
             }
-
+            
             let url = "http://127.0.0.1:5000/publication/add"
             let parameters: [String: Any] = [
                 "title": title,
                 "description": description,
                 "img_url": imageUrl,
                 "user_id": "651f3c24f7fc02789f00d1f9",
-                "org_id": "65245b7a73aaf5a7e19f2904",
+                "org_id": org_id,
             ]
-
+            
             AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: HTTPHeaders(self.headers)).response { res in
                 switch res.result {
                 case .success(let data): print("Success! \(String(describing: data))")
@@ -108,16 +120,48 @@ class PublicationModel {
         }
     }
     
-    func fetchCommentsPub(id: String){
+    func fetchCommentsPub(id: String) async {
         comments.removeAll()
         let url = "http://127.0.0.1:5000/comment/\(id)"
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for comm in json {
                 let comment = Comment(id: comm.1["_id"]["$oid"].stringValue, comment: comm.1["comment"].stringValue, likes: comm.1["likes"].intValue, name: "Placeholder")
-                self._comments.append(comment)
+                self.comments.append(comment)
             }
         }
-
+    }
+    
+    func postComment(id_pub: String, id_user: String, comment: String){
+        let url = "http://127.0.0.1:5000/comment/add/\(id_pub)"
+        let parameters: [String:Any] = [
+            "comment": comment,
+            "user_id": id_user,
+            "name": "Nombre de mientras"
+        ]
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: HTTPHeaders(self.headers)).response { res in
+            switch res.result{
+            case .success(let data): print("Success! \(String(describing: data))")
+            case .failure(let error): print("Error with the message: \(error.localizedDescription)")
+            }
+        }
+    }
+    func likePub(id_pub: String){
+        let url = "http://127.0.0.1:5000/publication/like/\(id_pub)"
+        AF.request(url, method: .patch, headers: HTTPHeaders(self.headers)).response{ res in
+            switch res.result{
+            case .success(let data): print("Success! \(String(describing: data))")
+            case .failure(let error): print("Error with the message: \(error.localizedDescription)")
+            }
+        }
+    }
+    func dislikePub(id_pub: String){
+        let url = "http://127.0.0.1:5000/publication/dislike/\(id_pub)"
+        AF.request(url, method: .patch, headers: HTTPHeaders(self.headers)).response{ res in
+            switch res.result{
+            case .success(let data): print("Success! \(String(describing: data))")
+            case .failure(let error): print("Error with the message: \(error.localizedDescription)")
+            }
+        }
     }
 }

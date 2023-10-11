@@ -11,26 +11,11 @@ import SwiftData
 struct ContentView: View {
     @State private var showPostView = false
     @State var selectedTab: Tab = .home
-    var publicationModel = PublicationModel()
+    @State var publicationModel = PublicationModel()
     @Environment(\.modelContext) private var modelContext
 
     var body: some View{
-        ZStack {
-            VStack {
-                switch selectedTab {
-                case .home:
-                    HomeView()
-                case .news:
-                    PostView()
-                case .search:
-                    PostView()
-                }
-            }
-            VStack {
-                Spacer()
-               // TabView(selectedTab: $selectedTab)
-            }
-        }
+        HomeView(feed: true, publicationModel: $publicationModel)
         .onAppear{
             publicationModel.fetchPublications()
         }

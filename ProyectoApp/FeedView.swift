@@ -10,34 +10,23 @@ import SwiftData
 
 struct FeedView: View {
     //  @Environment(\.modelContext) private var modelContext
-    @Query private var Publications: [Publication]
-    var publicationModel = PublicationModel()
+    @Binding var publicationModel: PublicationModel
     var body: some View {
         ZStack{
             Color.lightgray
             VStack{
                 NavigationStack{
                     ScrollView(.vertical){
-                        ForEach(publicationModel.publications) { pub in
-                            NavigationLink{
-                                PublicationDetailView(publication: pub)
-                            } label: {
+                        LazyVStack(spacing: 20){
+                            ForEach(publicationModel.publications) { pub in
                                 PublicationView(publication: pub)
-                                    .padding(.top, 10)
+                                .tint(.black)
                             }
-                            .tint(.black)
                         }
                     }
                 }
             }
         }
-        .onAppear{
-            publicationModel.fetchPublications()
-        }
     }
 }
 
-#Preview {
-    FeedView()
-    //  .modelContainer(for: [Publication.self], inMemory: true)
-}

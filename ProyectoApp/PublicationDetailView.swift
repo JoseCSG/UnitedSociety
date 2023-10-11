@@ -2,10 +2,11 @@ import SwiftUI
 import Kingfisher
 
 struct PublicationDetailView: View {
-    @State var upvote: Bool = false
-    @State var downvote: Bool = false
+    @Binding var upvote: Bool
+    @Binding var downvote: Bool
+    @State var postComment: Bool = false
     var publication: Publication
-    var comments =  PublicationModel()
+    @State var publicationModel = PublicationModel()
     
     func like() {
         if !upvote {
@@ -84,11 +85,15 @@ struct PublicationDetailView: View {
                                 
                             }
                         }
-                        Image("CommentIcon")
-                            .resizable()
-                            .frame(height: 20)
-                            .frame(width: 20)
-                        Text("4")
+                        Button {
+                            postComment.toggle()
+                        } label: {
+                            Image("CommentIcon")
+                                .resizable()
+                                .frame(height: 20)
+                                .frame(width: 20)
+                        }
+                        Text(String(publication.comments))
                             .padding(.trailing, -0)
                         Text("Comentarios")
                         Spacer()
@@ -98,6 +103,20 @@ struct PublicationDetailView: View {
                             .padding(.top, 10)
                             .padding(.bottom, -4)
                     }
+                    if(publicationModel.comments.isEmpty){
+                        Text("No hay comentarios")
+                    }
+                    else {
+                        ScrollView(.vertical){
+                            LazyVStack(spacing: 5){
+                                ForEach(publicationModel.comments){com in
+                                    CommentView(comm: com)
+                                }
+                            }
+                        }
+                    }
+                    
+                    Spacer()
                 }
                 Image("IconEmpresa")
                     .resizable()
@@ -107,21 +126,20 @@ struct PublicationDetailView: View {
                         Circle()
                             .stroke(Color.white, lineWidth: 1)
                     )
-                    .padding(.bottom, 240)
+                    .padding(.bottom, 580)
                     .padding(.trailing, 320)
             }
-            ScrollView(.vertical){
-                ForEach(comments.comments){ com in
-                    CommentView(upvote: false, downvote: false, name: com.name, likes: com.likes, comment: com.comment)
-                }
+        }
+        .sheet(isPresented: $postComment, content: {
+            PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user)
+                .presentationDetents([.medium])
+        })
+        .onAppear{
+            Task{
+                await publicationModel.fetchCommentsPub(id: publication._id_mongo)
+                print("Print del on appear detail")
+                print(publicationModel.comments)
             }
         }
-        .onAppear{
-            comments.fetchCommentsPub(id: publication._id_mongo)
-        }
     }
-}
-
-#Preview{
-    PublicationDetailView(publication: Publication(title: "Titulo dummy", img: "CanonSumidero", likes: 0, descption: "Una descripcion dummy", _id_mongo: "65249958f1af19c2f89ca73e"))
 }

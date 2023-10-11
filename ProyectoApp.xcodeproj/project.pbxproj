@@ -96,6 +96,8 @@
 		FB96BD2B2AB90CB40069DD90 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB96BD2A2AB90CB40069DD90 /* HomeView.swift */; };
 		FB96BD2D2AB91C7F0069DD90 /* PublicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB96BD2C2AB91C7F0069DD90 /* PublicationView.swift */; };
 		FB96BD302ABA5AB20069DD90 /* PublicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB96BD2F2ABA5AB20069DD90 /* PublicationModel.swift */; };
+		FBF6CE422AD68BA6007063D5 /* PostCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */; };
+		FBF6CE442AD7262D007063D5 /* PublicationCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE432AD7262D007063D5 /* PublicationCommentsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +134,8 @@
 		FB96BD2A2AB90CB40069DD90 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FB96BD2C2AB91C7F0069DD90 /* PublicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationView.swift; sourceTree = "<group>"; };
 		FB96BD2F2ABA5AB20069DD90 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
+		FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCommentView.swift; path = ../../../../Downloads/PostCommentView.swift; sourceTree = "<group>"; };
+		FBF6CE432AD7262D007063D5 /* PublicationCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationCommentsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,11 +256,13 @@
 		FB96BD1B2AB90CA80069DD90 /* ProyectoApp */ = {
 			isa = PBXGroup;
 			children = (
+				FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */,
 				70C4AD882AC4A91D00CB8992 /* Registrarse */,
 				FB96BD1C2AB90CA80069DD90 /* ProyectoAppApp.swift */,
 				D28A629D2AC251A700D03286 /* TabView.swift */,
 				FB96BD1E2AB90CA80069DD90 /* ContentView.swift */,
 				FB55370D2AC65090008553E4 /* PublicationDetailView.swift */,
+				FBF6CE432AD7262D007063D5 /* PublicationCommentsView.swift */,
 				FB55370F2ACB9225008553E4 /* CommentView.swift */,
 				FB96BD2A2AB90CB40069DD90 /* HomeView.swift */,
 				D28A62992AC24E6500D03286 /* PostView.swift */,
@@ -444,6 +450,7 @@
 				FB96BD2D2AB91C7F0069DD90 /* PublicationView.swift in Sources */,
 				70C4AD912AC4A91D00CB8992 /* TagsUser.swift in Sources */,
 				FB96BD1F2AB90CA80069DD90 /* ContentView.swift in Sources */,
+				FBF6CE442AD7262D007063D5 /* PublicationCommentsView.swift in Sources */,
 				FB21CEA22ABA7CF100C8CD13 /* OrganizationsView.swift in Sources */,
 				D28A62A02AC251C000D03286 /* Enums.swift in Sources */,
 				FB21CE9E2ABA777F00C8CD13 /* ProfileView.swift in Sources */,
@@ -451,6 +458,7 @@
 				70C4AD942AC4A91D00CB8992 /* RegisterAsociation.swift in Sources */,
 				FB55370E2AC65091008553E4 /* PublicationDetailView.swift in Sources */,
 				D28A62A42AC251CB00D03286 /* Item.swift in Sources */,
+				FBF6CE422AD68BA6007063D5 /* PostCommentView.swift in Sources */,
 				70C4AD922AC4A91D00CB8992 /* RegisterUser.swift in Sources */,
 				70C4AD932AC4A91D00CB8992 /* Register.swift in Sources */,
 				FB5537102ACB9225008553E4 /* CommentView.swift in Sources */,
