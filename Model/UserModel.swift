@@ -11,19 +11,20 @@ import SwiftData
 @Model
 final class User {
     var id = UUID()
-    var _id_mongo: String
-    var title: String
-    var img: String
-    var likes: Int
-    var descption: String
-    init(title: String, img: String, likes: Int, descption: String, _id_mongo:String) {
-        self.title = title
-        self.img = img
-        self.likes = likes
-        self.descption = descption
-        self._id_mongo = _id_mongo
+    var user_id: String
+    var name: String
+    var tags: [String]
+    var number: String
+    var last_name: String
+    
+    init(id: UUID = UUID(), user_id: String, name: String, tags: [String], number: String, last_name: String) {
+        self.id = id
+        self.user_id = user_id
+        self.name = name
+        self.tags = tags
+        self.number = number
+        self.last_name = last_name
     }
 }
-
 
 

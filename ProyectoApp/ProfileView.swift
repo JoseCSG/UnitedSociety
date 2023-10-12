@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 import MapKit
 
 
 struct ProfileView: View {
     var publicationModel = PublicationModel()
+    @Query private var user: [User]
     var body: some View {
         ScrollView(.vertical){
             ZStack{
@@ -57,7 +59,7 @@ struct ProfileView: View {
                         }
                         else {
                             ForEach(publicationModel.publications){ pub in
-                                    PublicationView(publication: pub)
+                                PublicationView(upvote: true, downvote: false, publication: pub)
                             }
                             .tint(.black)
                         }
@@ -67,7 +69,9 @@ struct ProfileView: View {
         }
         .ignoresSafeArea()
         .onAppear{
-            publicationModel.fetchPublicationsUser(id: "651f3c24f7fc02789f00d1f9")
+            if(!user.isEmpty){
+                publicationModel.fetchPublicationsUser(id_user: user[0].user_id)
+            }
         }
     }
 }

@@ -18,11 +18,13 @@ struct ContentView: View {
         HomeView(feed: true, publicationModel: $publicationModel)
         .onAppear{
             publicationModel.fetchPublications()
+            modelContext.insert(User(user_id: "6524dfe1d805c888097581fd", name: "Jose", tags: ["Cancer", "Primeros"], number: "38248242", last_name: "Sánchez"))
         }
     }
 }
 
 #Preview {
     ContentView()
-           .modelContainer(for: [Publication.self], inMemory: true)
+        .modelContainer(for: [Publication.self, User.self], inMemory: true)
 }
+

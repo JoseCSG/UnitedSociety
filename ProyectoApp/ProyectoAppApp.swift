@@ -22,6 +22,7 @@ struct ProyectoAppApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Publication.self,
+            User.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         

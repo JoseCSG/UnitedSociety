@@ -12,16 +12,16 @@ struct PublicationView: View {
         print(publication.title)
         if !upvote {
             publication.likes += 1
-            publicationModel.likePub(id_pub: publication._id_mongo)
+            publicationModel.likePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
             if downvote {
                 publication.likes += 1
-                publicationModel.likePub(id_pub: publication._id_mongo)
+                publicationModel.likePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
                 downvote.toggle()
             }
             
         } else {
             publication.likes -= 1
-            publicationModel.dislikePub(id_pub: publication._id_mongo)
+            publicationModel.dislikePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
         }
         upvote.toggle()
         
@@ -29,17 +29,17 @@ struct PublicationView: View {
     func dislike(){
         if(!downvote){
             publication.likes -= 1
-            publicationModel.dislikePub(id_pub: publication._id_mongo)
+            publicationModel.dislikePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
 
             if upvote {
                 publication.likes -= 1
-                publicationModel.dislikePub(id_pub: publication._id_mongo)
+                publicationModel.dislikePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
                 upvote.toggle()
             }
         }
         else {
             publication.likes += 1
-            publicationModel.likePub(id_pub: publication._id_mongo)
+            publicationModel.likePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
         }
         downvote.toggle()
     }

@@ -48,15 +48,15 @@ struct HomeView: View {
                                         .padding(.trailing, 10)
                                 }
                             }
-                        }.frame(height: geo.size.height/7)
+                        }.frame(height: geo.size.height/11)
                         ZStack{
                             if(feed){
                                 FeedView(publicationModel: $publicationModel)
-                                    .frame(height: 7*geo.size.height/8)
+                                    .frame(height: 10*geo.size.height/11)
                             }
                             else {
                                 OrganizationsView()
-                                    .frame(height: 7*geo.size.height/8)
+                                    .frame(height: 10*geo.size.height/11)
                             }
                             
                         }

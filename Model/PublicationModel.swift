@@ -18,6 +18,7 @@ final class Publication {
     var descption: String
     var id_user: String
     var comments: Int
+    
     init(title: String, img: String, likes: Int, descption: String, _id_mongo:String, id_user: String, comments: Int) {
         self.title = title
         self.img = img
