@@ -131,7 +131,7 @@ struct PublicationDetailView: View {
             }
         }
         .sheet(isPresented: $postComment, content: {
-            PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user)
+            PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user, publicationModel: $publicationModel, postComment: $postComment)
                 .presentationDetents([.medium])
         })
         .onAppear{

@@ -75,6 +75,7 @@ struct OrgaProfileView: View {
                                     PublicationView(publication: pub)
                                         .foregroundColor(.black)
                                 }
+                                .ignoresSafeArea()
                                 
                             }
                         }

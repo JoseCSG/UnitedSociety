@@ -51,6 +51,7 @@ struct PublicationView: View {
             VStack{
                 ZStack {
                     Color.white
+                        .opacity(0.5)
                     VStack {
                         HStack {
                             Text("")
@@ -106,11 +107,11 @@ struct PublicationView: View {
                             Text("Comentarios")
                             Spacer()
                         }
-                        HStack {
-                            Text(publication.descption)
-                                .padding(.top, 10)
-                                .padding(.bottom, -4)
-                        }
+                //        HStack {
+                        //    Text(publication.descption)
+                          //      .padding(.top, 10)
+                           //     .padding(.bottom, -4)
+                     //   }
                     }
                     Image("IconEmpresa")
                         .resizable()
@@ -120,13 +121,13 @@ struct PublicationView: View {
                             Circle()
                                 .stroke(Color.white, lineWidth: 1)
                         )
-                        .padding(.bottom, 240)
+                        .padding(.bottom, 210)
                         .padding(.trailing, 320)
                     
                 }
             }
             .sheet(isPresented: $postComment, content: {
-                PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user)
+                PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user, publicationModel: $publicationModel, postComment: $postComment)
                     .presentationDetents([.medium])
             })
         }

@@ -28,13 +28,13 @@ struct ProfileView: View {
                         
                         
                         VStack(alignment: .center) {
-                            Text("Emmanuel Macron")
+                            Text("José Sánchez")
                                 .font(.title)
                             
                             
                             VStack {
-                                Text("Paris, France")
-                                Text("49 años")
+                                Text("Monterrey, Mexico")
+                                Text("20 años")
                             }
                             .font(.subheadline)
                             .foregroundColor(.white)
@@ -51,7 +51,7 @@ struct ProfileView: View {
                         
                         if(publicationModel.publications.isEmpty){
                             VStack(alignment: .leading){
-                                Text("No publico nada Emmanuel")
+                                Text("No ha publicado nada José Sánchez")
                             }
                             .foregroundColor(.white)
                         }
@@ -59,6 +59,7 @@ struct ProfileView: View {
                             ForEach(publicationModel.publications){ pub in
                                     PublicationView(publication: pub)
                             }
+                            .tint(.black)
                         }
                     }
                 }

@@ -17,7 +17,7 @@ struct FeedView: View {
             VStack{
                 NavigationStack{
                     ScrollView(.vertical){
-                        LazyVStack(spacing: 20){
+                        LazyVStack(spacing: 10){
                             ForEach(publicationModel.publications) { pub in
                                 PublicationView(publication: pub)
                                 .tint(.black)
