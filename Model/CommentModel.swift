@@ -11,4 +11,5 @@ struct Comment : Identifiable {
     var comment: String
     var likes: Int
     var name: String
+    var img: String
 }

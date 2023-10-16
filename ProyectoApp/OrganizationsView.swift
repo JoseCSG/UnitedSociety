@@ -19,118 +19,82 @@ struct OrganizationsView: View {
             VStack{
                 
                 ScrollView(.vertical){
-                    Color.lightgray
-                    //                VStack{
                     HStack{
                         TextField("Buscar organizacion", text: $searchText)
                             .padding()
-                            .background(Color.lightgray)
+                            .background(Color.white)
                             .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2) // Agrega sombra al fondo
                             .padding(.horizontal, 50)
                             .padding(.top, 10)
+                            .onChange(of: searchText, initial: false){
+                                if(searchText == ""){
+                                    organizationModel.fetchOrganizations(id_user: "6524dfe1d805c888097581fd")
+                                }
+                                else{
+                                    organizationModel.fetchOrganizationsName(name: searchText)
+                                }
+                            }
+                            
                         //                        .padding(.bottom, 20)
                         //                        .frame(height: 100)
                     }
                     
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack(spacing: 10){
-                            ForEach(organizationModel.organizations){ org in
-                                NavigationLink(destination: OrgaProfileView(org: org)){
-                                    KFImage(URL(string: org.img))
-                                        .resizable()
-                                        .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: 100)
-                                        .clipShape(.circle)
-                                        .overlay(
-                                            Circle()
-                                                .stroke(Color.black, lineWidth:2))
-                                }
-                            }
-                                                            
-                            .padding(.horizontal, 10)
-                            
+                    VStack(alignment: .leading) {
+                        if(searchText == ""){
+                            Text("Coiciden con tus Tags")
+                                .padding(.horizontal, 10)
+                                .font(.system(size: 20))
+                                .bold()
                         }
-                        .padding(.vertical, 20)
-                    }
-                    
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack(spacing: 10){
-                            ForEach(0..<5) { index in
-                                Image("Space")
-                                    .resizable()
-                                    .frame(width: 150, height: 150)
-                                    .cornerRadius(10)
-                                    .padding(.bottom, 60)
-                                
-                                    Image("IconEmpresa")
-                                        .resizable()
-                                        .frame(width: 35, height: 35)
-                                        .clipShape(Circle())
-                                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                                        .offset(x: -170, y: -90)
-                                    
-                                    
-                                
-                                //Aqui
-                            }
+                        else {
+                            Text("Organizaciones encontradas")
+                                .padding(.horizontal, 10)
+                                .font(.system(size: 20))
+                                .bold()
                         }
-                        .padding(.horizontal, 20)
-                        
-                    }
-                    .padding(.vertical, 20)
-                    
-                    //    ScrollView(.horizontal, showsIndicators: false){
-                    //      HStack(spacing: 20){
-                    //        ForEach(0..<5) { index in
-                    //      Image("IconEmpresa")
-                    //        .resizable()
-                    //      .frame(width: 150, height: 150)
-                    //    .clipShape(Circle())
-                    
-                    // Image("IconEmpresa")
-                    //   .resizable()
-                    // .frame(width: 150, height: 150)
-                    //.clipShape(Circle())
-                    //Aqui
-                    // }
-                    //}
-                    //}
-                    //.padding(.horizontal, 20)
-                    
-                    
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ForEach(0..<5) { index in
-                                NavigationLink(destination: PublicationView(publication: Publication.dummy)){
-                                    Image("CanonSumidero")
-                                        .resizable()
-                                        .frame(width: 150, height: 150)
+                
+                        // Puedes ajustar el estilo del título según tus preferencias
+                        ScrollView(.horizontal, showsIndicators: false){
+                            VStack{
+                                ZStack{
+                                    Color.white
                                         .cornerRadius(10)
+                                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2) // Agrega sombra al fondo
+                                    HStack(spacing: 10){
+                                        if(!organizationModel.organizations.isEmpty){
+                                            ForEach(organizationModel.organizations){ org in
+                                                NavigationLink(destination: OrgaProfileView(org: org)){
+                                                    KFImage(URL(string: org.img))
+                                                        .resizable()
+                                                        .frame(width: 100, height: 100)
+                                                        .clipShape(Circle())
+                                                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .frame(height: 130)
+                                    .padding(.horizontal, 20)
                                 }
-                                Image("IconEmpresa")
-                                    .resizable()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                                    .offset(x: -170, y: -56)
                             }
+                            .padding(.vertical, 5)
                         }
-                        .padding(.horizontal, 20)
-                        
-                        //                    .frame(height: 200)
-                        //                    .padding(.vertical, 10)
+                        .padding(.vertical, 5)
                     }
-                    .padding(.vertical, 20)
                     
-                    //            }
-                    
+                    ForEach(organizationModel.organizations){ org in
+                        OrgMostLikedPubsView(org: org)
+                    }
+
                 }
             }
             .onAppear {
-                organizationModel.fetchOrganizations()
+                organizationModel.fetchOrganizations(id_user: "6524dfe1d805c888097581fd")
             }
-            
         }
+        .background(Color.lightgray)
+        
     }
 }
 #Preview {

@@ -15,15 +15,19 @@ struct FeedView: View {
         ZStack{
             Color.lightgray
             VStack{
-                NavigationStack{
                     ScrollView(.vertical){
-                        LazyVStack(spacing: 10){
-                            ForEach(publicationModel.publications) { pub in
-                                PublicationView(publication: pub)
-                                .tint(.black)
-                            }
+                        if(publicationModel.publications.isEmpty){
+                            Text("No sigues a ninguna organización")
                         }
-                    }
+                        else{
+                            LazyVStack(spacing: 10){
+                                ForEach(publicationModel.publications) { pub in
+                                    PublicationView(publication: pub)
+                                    .tint(.black)
+                                }
+                            }
+
+                        }
                 }
             }
         }

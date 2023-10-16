@@ -16,14 +16,19 @@ final class User {
     var tags: [String]
     var number: String
     var last_name: String
+    var location: String
+    var age: Int
+    var img: String
     
-    init(id: UUID = UUID(), user_id: String, name: String, tags: [String], number: String, last_name: String) {
-        self.id = id
+    init(user_id: String, name: String, tags: [String], number: String, last_name: String, location: String, age: Int, img: String) {
         self.user_id = user_id
         self.name = name
         self.tags = tags
         self.number = number
         self.last_name = last_name
+        self.location = location
+        self.age = age
+        self.img = img
     }
 }
 

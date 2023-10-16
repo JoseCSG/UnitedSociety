@@ -60,6 +60,9 @@ struct HomeView: View {
                             }
                             
                         }
+                        .onAppear{
+                            publicationModel.fetchPublications(id_user: "6524dfe1d805c888097581fd")
+                        }
                     }
                 }
             }

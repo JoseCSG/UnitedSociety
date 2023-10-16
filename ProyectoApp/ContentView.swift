@@ -13,12 +13,16 @@ struct ContentView: View {
     @State var selectedTab: Tab = .home
     @State var publicationModel = PublicationModel()
     @Environment(\.modelContext) private var modelContext
-
+    
     var body: some View{
-        HomeView(feed: true, publicationModel: $publicationModel)
+        NavigationStack{
+            NavigationView{
+                LogInView()
+            }
+        }
         .onAppear{
-            publicationModel.fetchPublications()
-            modelContext.insert(User(user_id: "6524dfe1d805c888097581fd", name: "Jose", tags: ["Cancer", "Primeros"], number: "38248242", last_name: "Sánchez"))
+            let user = User(user_id: "6524dfe1d805c888097581fd", name: "Jose", tags: ["Cancer", "Nuevo Leon"], number: "9612462865", last_name: "Sanchez", location: "Monterrey", age: 20, img: "https://firebasestorage.googleapis.com:443/v0/b/united-society-fad81.appspot.com/o/publications%2F6DD34CBC-46AE-40E7-AE47-B39F26D36074?alt=media&token=72585d82-7885-4b05-ad8f-7b884fe7d901")
+            modelContext.insert(user)
         }
     }
 }
@@ -27,4 +31,3 @@ struct ContentView: View {
     ContentView()
         .modelContainer(for: [Publication.self, User.self], inMemory: true)
 }
-

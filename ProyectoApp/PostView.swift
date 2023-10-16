@@ -54,9 +54,9 @@ struct PostView: View {
                        Task {
                     if let data = try? await selectedImageItem?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
-                         //   selectedImage = Image(uiImage: uiImage)
+                            selectedImage = Image(uiImage: uiImage)
                             selectedUIImage = uiImage
-                         //   return
+                            return
                         }
                     }
         
@@ -70,6 +70,7 @@ struct PostView: View {
             Task{
                await publicationModel.postPublication(title: title, description: description, img: selectedUIImage!, org_id: id)
                 publicationModel.fetchPublicationsOrg(id: id)
+                showAddPub.toggle()
             }
         }
     }

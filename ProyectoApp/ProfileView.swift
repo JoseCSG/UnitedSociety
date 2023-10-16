@@ -14,63 +14,121 @@ struct ProfileView: View {
     var publicationModel = PublicationModel()
     @Query private var user: [User]
     var body: some View {
-        ScrollView(.vertical){
-            ZStack{
-                Color(red: 55/255, green: 94/255, blue: 152/255)
-                VStack{
-                    VStack {
-                        MapView(latitud: -21.2423, longitud: 23.3242)
-                            .ignoresSafeArea(edges: .top)
-                            .frame(height: 200)
+        NavigationView {
+            ScrollView(.vertical){
+                VStack {
+                    HStack {
+                        ImageProfileView(imageName: user[0].img)
+                            .frame(width: 90, height: 90)
+                            .padding(.horizontal, 20)
                         
-                        
-                        CircleImage(image: Image(systemName: "a"))
-                            .offset(y: -130)
-                            .padding(.bottom, -130)
-                        
-                        
-                        VStack(alignment: .center) {
-                            Text("José Sánchez")
+                        VStack(alignment: .leading) {
+                            Text(user[0].name)
                                 .font(.title)
+                                .bold()
+                                .foregroundColor(.black)
                             
+                            Text(user[0].location)
+                                .font(.subheadline)
+                                .foregroundColor(.black)
                             
-                            VStack {
-                                Text("Monterrey, Mexico")
-                                Text("20 años")
-                            }
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                            
-                            
-                            Divider()
-                                .frame(height: 1.5)
-                                .overlay(Color.white)
-                                .padding()
-                            
+                            Text(String(user[0].age))
+                                .font(.subheadline)
+                                .foregroundColor(.black)
                         }
-                        .foregroundColor(.white)
-                        .padding()
+                        Spacer()
                         
-                        if(publicationModel.publications.isEmpty){
-                            VStack(alignment: .leading){
-                                Text("No ha publicado nada José Sánchez")
-                            }
-                            .foregroundColor(.white)
+                    }
+                    .padding(.top, 90)
+                    
+                    HStack {
+                        VStack {
+                            Text("Tags seguidos")
+                                .padding(.horizontal, 10)
+                                .font(.headline)
+                                .foregroundColor(Color.black)
+                                .padding(.bottom, 5)
                         }
-                        else {
-                            ForEach(publicationModel.publications){ pub in
-                                PublicationView(upvote: true, downvote: false, publication: pub)
+                        .fixedSize(horizontal: true, vertical: false)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            ZStack {
+                                Color.clear
+                                    .cornerRadius(10)
+                                    .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                
+                                HStack {
+                                    ForEach(user[0].tags, id: \.self) { tag in
+                                        Text(tag)
+                                            .font(.subheadline)
+                                            .foregroundColor(.black)
+                                            .background(Color.lightgray)
+                                            .overlay(RoundedRectangle(cornerRadius: 20)
+                                                .stroke(Color.clear, lineWidth: 3))
+                                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                            .padding(.horizontal, 5)
+                                    }
+                                }
                             }
-                            .tint(.black)
+                            .frame(height: 30)
+                            .padding(.horizontal, 5)
                         }
                     }
+                    
+                    
+                    .padding(.vertical, 5)
+                    HStack {
+                        if (!user.isEmpty) {
+                            NavigationLink(destination: EditProfileView()) {
+                                Text("Editar Perfil")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .frame(width: 120, height: 40)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 5)
+                                    .background(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+                                    .cornerRadius(10)
+                            }
+                            
+                            NavigationLink(destination: FollowView()) {
+                                Text("Seguidos")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .frame(width: 120, height: 40)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 5)
+                                    .background(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+                                    .cornerRadius(10)
+                            }
+                        }
+                    }
+                    
+                    Divider()
+                        .frame(height: 1.5)
+                        .background(Color.lightgray)
+                        .padding()
+                    
+                    if(publicationModel.publications.isEmpty){
+                        VStack(alignment: .leading){
+                            Text("No ha publicado nada José Sánchez")
+                        }
+                        .foregroundColor(.white)
+                    }
+                    else {
+                        ForEach(publicationModel.publications){ pub in
+                            PublicationView(upvote: true, downvote: false, publication: pub)
+                        }
+                        .tint(.black)
+                    }
+                    
+                    Spacer()
                 }
             }
-        }
-        .ignoresSafeArea()
-        .onAppear{
-            if(!user.isEmpty){
-                publicationModel.fetchPublicationsUser(id_user: user[0].user_id)
+            .ignoresSafeArea()
+            .onAppear{
+                if(!user.isEmpty){
+                    publicationModel.fetchPublicationsUser(id_user: user[0].user_id)
+                }
             }
         }
     }

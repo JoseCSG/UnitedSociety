@@ -18,8 +18,9 @@ final class Publication {
     var descption: String
     var id_user: String
     var comments: Int
+    var img_org: String
     
-    init(title: String, img: String, likes: Int, descption: String, _id_mongo:String, id_user: String, comments: Int) {
+    init(title: String, img: String, likes: Int, descption: String, _id_mongo:String, id_user: String, comments: Int, img_org: String) {
         self.title = title
         self.img = img
         self.likes = likes
@@ -27,10 +28,11 @@ final class Publication {
         self._id_mongo = _id_mongo
         self.id_user = id_user
         self.comments = comments
+        self.img_org = img_org
     }
 }
 extension Publication {
-    static var dummy = Publication(title: "Es un título dummy", img: "CanonSumidero", likes: 20, descption: "Esta es la descripción del dummy, esta puede ser muy muy larga", _id_mongo: "23423", id_user: "234232", comments: 12)
+    static var dummy = Publication(title: "Es un título dummy", img: "CanonSumidero", likes: 20, descption: "Esta es la descripción del dummy, esta puede ser muy muy larga", _id_mongo: "23423", id_user: "234232", comments: 12, img_org: "efherjebe")
 }
 
 

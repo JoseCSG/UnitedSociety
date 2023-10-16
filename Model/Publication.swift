@@ -21,19 +21,20 @@ class PublicationModel {
     let storage = Storage.storage()
     let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5NzMyNTYsImV4cCI6MTY5NzgzNzI1NiwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.z9yU_sAdwzEkkg1XQfYrkUCAhYkDbbuEHoWlJZgdcAA", "Accept": "application/json", "Content-Type": "application/json" ]
     
-    func fetchPublications(){
+    func fetchPublications(id_user: String){
         publications.removeAll()
-        let url = "http://127.0.0.1:5000/publication/"
+        let url = "http://127.0.0.1:5000/publication/\(id_user)"
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
                 let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue,
-                                              id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue
+                                              id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue
                 )
                 self.publications.append(publication)
             }
         }
     }
+
     
     func fetchPublicationsUser(id_user: String){
         publications.removeAll()
@@ -42,7 +43,7 @@ class PublicationModel {
         AF.request(url, method: .get ,encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue)
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue)
                 self.publications.append(publication)
             }
         }
@@ -54,7 +55,7 @@ class PublicationModel {
         AF.request(url, method: .get ,encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue)
+                let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue)
                 self.publications.append(publication)
             }
         }
@@ -127,18 +128,17 @@ class PublicationModel {
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for comm in json {
-                let comment = Comment(id: comm.1["_id"]["$oid"].stringValue, comment: comm.1["comment"].stringValue, likes: comm.1["likes"].intValue, name: comm.1["name"].stringValue)
+                let comment = Comment(id: comm.1["_id"]["$oid"].stringValue, comment: comm.1["comment"].stringValue, likes: comm.1["likes"].intValue, name: comm.1["name"].stringValue, img: comm.1["img_url"].stringValue)
                 self.comments.append(comment)
             }
         }
     }
     
-    func postComment(id_pub: String, id_user: String, comment: String){
+    func postComment(id_pub: String, id_user: String, comment: String) async {
         let url = "http://127.0.0.1:5000/comment/add/\(id_pub)"
         let parameters: [String:Any] = [
             "comment": comment,
             "user_id": id_user,
-            "name": "Nombre de mientras"
         ]
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: HTTPHeaders(self.headers)).response { res in
             switch res.result{

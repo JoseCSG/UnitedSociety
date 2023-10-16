@@ -1,5 +1,6 @@
 import SwiftUI
 import Kingfisher
+import SwiftData
 
 struct PublicationDetailView: View {
     @Binding var upvote: Bool
@@ -7,6 +8,7 @@ struct PublicationDetailView: View {
     @State var postComment: Bool = false
     var publication: Publication
     @State var publicationModel = PublicationModel()
+    @Query private var user: [User]
     
     func like() {
         if !upvote {
@@ -116,9 +118,9 @@ struct PublicationDetailView: View {
                         }
                     }
                     
-                    Spacer()
                 }
-                Image("IconEmpresa")
+                .padding(.top, 20)
+                KFImage(URL(string: publication.img_org))
                     .resizable()
                     .frame(width: 40, height: 40)
                     .clipShape(Circle())
@@ -126,20 +128,19 @@ struct PublicationDetailView: View {
                         Circle()
                             .stroke(Color.white, lineWidth: 1)
                     )
-                    .padding(.bottom, 580)
+                    .padding(.bottom, 660)
                     .padding(.trailing, 320)
             }
         }
         .sheet(isPresented: $postComment, content: {
-            PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user, publicationModel: $publicationModel, postComment: $postComment)
+            PostCommentView(id_pub: publication._id_mongo, id_user: user[0].user_id, publicationModel: $publicationModel, postComment: $postComment)
                 .presentationDetents([.medium])
         })
         .onAppear{
             Task{
                 await publicationModel.fetchCommentsPub(id: publication._id_mongo)
-                print("Print del on appear detail")
-                print(publicationModel.comments)
             }
         }
     }
 }
+

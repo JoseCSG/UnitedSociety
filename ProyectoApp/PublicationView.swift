@@ -1,5 +1,6 @@
 import SwiftUI
 import Kingfisher
+import SwiftData
 
 struct PublicationView: View {
     @State var upvote: Bool = false
@@ -7,6 +8,7 @@ struct PublicationView: View {
     @State var postComment: Bool = false
     var publication: Publication
     @State var publicationModel = PublicationModel()
+    @Query private var user: [User]
     
     func like() {
         print(publication.title)
@@ -113,7 +115,7 @@ struct PublicationView: View {
                            //     .padding(.bottom, -4)
                      //   }
                     }
-                    Image("IconEmpresa")
+                    KFImage(URL(string: publication.img_org))
                         .resizable()
                         .frame(width: 40, height: 40)
                         .clipShape(Circle())
@@ -127,7 +129,7 @@ struct PublicationView: View {
                 }
             }
             .sheet(isPresented: $postComment, content: {
-                PostCommentView(id_pub: publication._id_mongo, id_user: publication.id_user, publicationModel: $publicationModel, postComment: $postComment)
+                PostCommentView(id_pub: publication._id_mongo, id_user: user[0].user_id, publicationModel: $publicationModel, postComment: $postComment)
                     .presentationDetents([.medium])
             })
         }

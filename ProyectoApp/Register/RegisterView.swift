@@ -17,49 +17,10 @@ struct Register: View {
     var countries = ["🇲🇽", "🇺🇸"]
 
     var body: some View {
-        NavigationView {
             ZStack {
-                Image("Us2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 200, height: 200)
-                    .offset(y: 300)
-                    .offset(x: -70)
-                    .edgesIgnoringSafeArea(.all)
-
-                Color.white.opacity(0.7)
-                Rectangle()
-                    .fill(Color(hex: "20E2A5"))
-                    .frame(width: 45, height: 550)
-                    .cornerRadius(20)
-                    .rotationEffect(.degrees(42))
-                    .offset(y: 300)
-                    .offset(x: 50)
-
-                Rectangle()
-                    .fill(Color(hex: "DEDBDB"))
-                    .frame(width: 45, height: 300)
-                    .cornerRadius(20)
-                    .rotationEffect(.degrees(42))
-                    .offset(y: 80)
-                    .offset(x: 150)
-
-                Rectangle()
-                    .fill(Color(hex: "20E2A5"))
-                    .frame(width: 45, height: 400)
-                    .cornerRadius(20)
-                    .rotationEffect(.degrees(42))
-                    .offset(y: -100)
-                    .offset(x: -150)
-
-                Rectangle()
-                    .fill(Color(hex: "DEDBDB"))
-                    .frame(width: 45, height: 660)
-                    .cornerRadius(20)
-                    .rotationEffect(.degrees(42))
-                    .offset(y: -220)
-                    .offset(x: -150)
-
+                // Integra BackgroundView al fondo
+                BackgroundView()
+                
                 VStack {
                     Text("Bienvenido(a) a United Society")
                         .font(.largeTitle)
@@ -124,28 +85,8 @@ struct Register: View {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
             .background(Color.clear)
-            .navigationBarHidden(true)
-        }
     }
 }
-
-extension Color {
-    static let customBlue = Color(red: 55/255, green: 94/255, blue: 152/255)
-
-    init(hex2: String) {
-        let scanner = Scanner(string: hex2)
-        var rgb: UInt64 = 0
-
-        scanner.scanHexInt64(&rgb)
-
-        self.init(
-            red: Double((rgb & 0xFF0000) >> 16) / 255.0,
-            green: Double((rgb & 0x00FF00) >> 8) / 255.0,
-            blue: Double(rgb & 0x0000FF) / 255.0
-        )
-    }
-}
-
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
         Register()
