@@ -107,6 +107,7 @@ struct PublicationDetailView: View {
                     }
                     if(publicationModel.comments.isEmpty){
                         Text("No hay comentarios")
+                        Spacer()
                     }
                     else {
                         ScrollView(.vertical){

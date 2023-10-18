@@ -5,6 +5,40 @@ struct CommentView: View {
     @State var upvote: Bool = false
     @State var downvote: Bool = false
     @State var comm: Comment
+    @State var publicationModel = PublicationModel()
+    func like() {
+        if !upvote {
+            comm.likes += 1
+            publicationModel.likeComm(id_comm: comm.id)
+            if downvote {
+                comm.likes += 1
+                publicationModel.likeComm(id_comm: comm.id)
+                downvote.toggle()
+            }
+            
+        } else {
+            comm.likes -= 1
+            publicationModel.dislikeComm(id_comm: comm.id)
+        }
+        upvote.toggle()
+        
+    }
+    func dislike(){
+        if(!downvote){
+            comm.likes -= 1
+            publicationModel.dislikeComm(id_comm: comm.id)
+            if upvote {
+                comm.likes -= 1
+                publicationModel.dislikeComm(id_comm: comm.id)
+                upvote.toggle()
+            }
+        }
+        else {
+            comm.likes += 1
+            publicationModel.likeComm(id_comm: comm.id)
+        }
+        downvote.toggle()
+    }
 
     var body: some View {
         HStack(alignment: .center) {
@@ -25,7 +59,7 @@ struct CommentView: View {
                     .padding(.bottom, 10)
 
                 HStack {
-                    Button(action: { print(comm) }) {
+                    Button(action: {like()}) {
                         if upvote {
                             Image("ArrowClicked")
                                 .resizable()
@@ -38,7 +72,7 @@ struct CommentView: View {
                         }
                     }
                     Text(String(comm.likes))
-                    Button(action: {}) {
+                    Button(action: {dislike()}) {
                         if downvote {
                             Image("ArrowClicked")
                                 .resizable()

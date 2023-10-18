@@ -172,4 +172,25 @@ class PublicationModel {
             }
         }
     }
+    
+    func likeComm(id_comm: String){
+        let url = "http://127.0.0.1:5000/comment/like/\(id_comm)"
+        AF.request(url, method: .patch, encoding: JSONEncoding.default,
+                   headers: HTTPHeaders(self.headers)).response{ res in
+            switch res.result{
+            case .success(let data): print("Success! \(String(describing: data))")
+            case .failure(let error): print("Error with the message: \(error.localizedDescription)")
+            }
+        }
+    }
+        
+    func dislikeComm(id_comm: String){
+        let url = "http://127.0.0.1:5000/comment/dislike/\(id_comm)"
+        AF.request(url, method: .patch, encoding: JSONEncoding.default, headers: HTTPHeaders(self.headers)).response{ res in
+            switch res.result{
+            case .success(let data): print("Success! \(String(describing: data))")
+            case .failure(let error): print("Error with the message: \(error.localizedDescription)")
+            }
+        }
+    }
 }

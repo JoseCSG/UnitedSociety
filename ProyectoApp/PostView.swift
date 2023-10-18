@@ -10,7 +10,7 @@ import Alamofire
 import PhotosUI
 
 struct PostView: View {
-  
+    
     @State private var title = ""
     @State private var description = ""
     @State private var selectedImageItem: PhotosPickerItem? = nil
@@ -20,38 +20,32 @@ struct PostView: View {
     @Binding var publicationModel: PublicationModel
     @Binding var showAddPub: Bool
     var body: some View {
-        
         VStack {
-            TextField("Escribe el titulo de la publicacion", text: $title)
+            Text("Nueva publicación")
+                .font(.title)
                 .padding()
-            TextField("Escribe la descripcion", text: $description)
+            
+            TextField("Titulo de la publicacion", text: $title)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-            PhotosPicker(selection: $selectedImageItem){
-                Text("Choose an image")
-            }
             
-            if let selectedImage{
-                selectedImage
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 300, height: 300)
+            TextEditor(text: $description)
+                .frame(height: 150)
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
+                .padding()
+            HStack {
+                if let selectedImage = selectedImage {
+                    selectedImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 100)
+                        .cornerRadius(10)
+                        .padding()
+                }
+
             }
-            
-            
-            Button {
-                addPub()
-            } label: {
-                Text("Enviar")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            Spacer()
-        }
-        .padding()
-        .onChange(of: selectedImageItem) { _ in
-                       Task {
+            .onChange(of: selectedImageItem) { _ in
+                Task {
                     if let data = try? await selectedImageItem?.loadTransferable(type: Data.self) {
                         if let uiImage = UIImage(data: data) {
                             selectedImage = Image(uiImage: uiImage)
@@ -59,19 +53,47 @@ struct PostView: View {
                             return
                         }
                     }
-        
+                    
                     print("Failed")
                 }
             }
+            
+            PhotosPicker(selection: $selectedImageItem){
+                Image(systemName: "photo.on.rectangle")
+                    .font(.largeTitle)
+                    .foregroundColor(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+            }
+            HStack{
+                Spacer()
+                Button(action: {
+                    addPub()
+                }) {
+                    Text("Enviar")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                Button(action: {showAddPub.toggle()}){
+                    Text("Cancelar")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color(red: 255/255, green: 0/255, blue: 0/255))
+                        .cornerRadius(10)
+                }
+                .padding()
+                Spacer()
+            }
+        }
     }
-    
-    private func addPub(){
-        withAnimation {
+        
+        private func addPub(){
             Task{
-               await publicationModel.postPublication(title: title, description: description, img: selectedUIImage!, org_id: id)
+                await publicationModel.postPublication(title: title, description: description, img: selectedUIImage!, org_id: id)
                 publicationModel.fetchPublicationsOrg(id: id)
                 showAddPub.toggle()
             }
         }
     }
-}
