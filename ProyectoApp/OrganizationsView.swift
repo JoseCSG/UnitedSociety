@@ -29,10 +29,16 @@ struct OrganizationsView: View {
                             .padding(.top, 10)
                             .onChange(of: searchText, initial: false){
                                 if(searchText == ""){
-                                    organizationModel.fetchOrganizations(id_user: "6524dfe1d805c888097581fd")
+                                    Task{
+                                        await                               organizationModel.fetchOrganizations(id_user: "6524dfe1d805c888097581fd")
+
+                                    }
                                 }
                                 else{
-                                    organizationModel.fetchOrganizationsName(name: searchText)
+                                    Task{
+                                        await                                     organizationModel.fetchOrganizationsName(name: searchText)
+
+                                    }
                                 }
                             }
                             
@@ -90,7 +96,9 @@ struct OrganizationsView: View {
                 }
             }
             .onAppear {
-                organizationModel.fetchOrganizations(id_user: "6524dfe1d805c888097581fd")
+                Task{
+                   await organizationModel.fetchOrganizations(id_user: "6524dfe1d805c888097581fd")
+                }
             }
         }
         .background(Color.lightgray)
@@ -100,4 +108,5 @@ struct OrganizationsView: View {
 #Preview {
     OrganizationsView()
 }
+
 

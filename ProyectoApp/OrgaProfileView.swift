@@ -16,7 +16,9 @@ struct OrgaProfileView: View {
     @State var publicationModel = PublicationModel()
     var organizationModel = OrganizationModel()
     @State var org: Organization
-    var userRol: UserRol = .asociacion
+    @Query private var user: [User]
+    @State var userRol = ""
+    @State var following = false
     let vision = "Fomentamos la participación ciudadana vinculando, desarrollando, empoderando a ONGs y líderes sociales con el fin de sumar al bienestar de todos"
     
     var body: some View {
@@ -97,8 +99,8 @@ struct OrgaProfileView: View {
                 
                 .padding(.vertical, 5)
                 HStack {
-                    if userRol == .asociacion {
-                        NavigationLink(destination: EditOrgaProfileView()) {
+                    if (userRol == "Asociacion" && org.id == user[0].user_id){
+                        NavigationLink(destination: EditOrgaProfileView(org: org)) {
                             Text("Editar Perfil")
                                 .font(.headline)
                                 .foregroundColor(.white)
@@ -119,7 +121,7 @@ struct OrgaProfileView: View {
                                 .cornerRadius(10)
                         })
                     }
-                    if userRol == .usuario {
+                    if userRol == "Usuario" {
                         NavigationLink(destination: AboutUs(org: org)) {
                             Text("Acerca de")
                                 .font(.headline)
@@ -133,15 +135,29 @@ struct OrgaProfileView: View {
                         
                         Button {
                             organizationModel.followOrg(id_usuario: "6524dfe1d805c888097581fd", id_org: org.id)
+                            org.followers += 1
+                            following.toggle()
                         } label: {
-                            Text("Seguir")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(width: 120, height: 40)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 5)
-                                .background(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
-                                .cornerRadius(10)
+                            if following {
+                                Text("Dejar de seguir")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .frame(width: 120, height: 40)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 5)
+                                    .background(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+                                    .cornerRadius(10)
+                            }
+                            else {
+                                Text("Seguir")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .frame(width: 120, height: 40)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 5)
+                                    .background(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+                                    .cornerRadius(10)
+                            }
                         }
                     }
                 }
@@ -179,6 +195,7 @@ struct OrgaProfileView: View {
             Task{
                 await publicationModel.fetchPublicationsOrg(id: org.id)
             }
+            userRol = user[0].rol
         }
     }
 }

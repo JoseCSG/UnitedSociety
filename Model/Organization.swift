@@ -16,7 +16,7 @@ class OrganizationModel {
     init (){}
     let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5NzMyNTYsImV4cCI6MTY5NzgzNzI1NiwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.z9yU_sAdwzEkkg1XQfYrkUCAhYkDbbuEHoWlJZgdcAA", "Accept": "application/json", "Content-Type": "application/json" ]
 
-    func fetchOrganizations(id_user: String){
+    func fetchOrganizations(id_user: String) async {
         organizations.removeAll()
         let url = "http://127.0.0.1:5000/org/\(id_user)"
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
@@ -34,7 +34,7 @@ class OrganizationModel {
         }
     }
     
-    func fetchOrganizationsName(name: String){
+    func fetchOrganizationsName(name: String) async {
         organizations.removeAll()
         let url = "http://127.0.0.1:5000/org/name/\(name)"
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in

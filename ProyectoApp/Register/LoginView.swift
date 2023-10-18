@@ -96,6 +96,11 @@ struct LogInView: View {
             }
             .background(Color.clear)
             .navigationBarHidden(true)
+            .onAppear{
+                Task{
+                    await publicationModel.fetchPublications(id_user: "6524dfe1d805c888097581fd")
+                }
+            }
     }
 }
 struct LogInView_Previews: PreviewProvider {

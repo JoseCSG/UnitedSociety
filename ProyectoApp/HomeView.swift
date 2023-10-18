@@ -6,6 +6,7 @@ struct HomeView: View {
     @State var feed:Bool = true;
     @Binding var publicationModel: PublicationModel
     @Query private var user: [User]
+    var org = Organization.dummy
     var body: some View {
         NavigationView{
             GeometryReader { geo in
@@ -21,6 +22,9 @@ struct HomeView: View {
                                 Spacer()
                                 Button {
                                     feed = true;
+                                    Task{
+                                        await publicationModel.fetchPublications(id_user: "6524dfe1d805c888097581fd")
+                                    }
                                 } label: {
                                     Text("Siguiendo")
                                         .padding(.trailing, 40)
@@ -38,15 +42,30 @@ struct HomeView: View {
                                         .modifier(SelectedStyleOrgs(isSelected: !feed))
                                 }
                                 Spacer()
-                                NavigationLink{
-                                    ProfileView()
-                                } label: {
-                                    KFImage(URL(string: user[0].img))
-                                        .resizable()
-                                        .frame(width: 40, height: 50)
-                                        .clipShape(.circle)
-                                        .padding(.trailing, 10)
-                                        .padding(.bottom, 25)
+                                if(user[0].rol == "Usuario"){
+                                    NavigationLink{
+                                        ProfileView()
+                                    } label: {
+                                        KFImage(URL(string: user[0].img))
+                                            .resizable()
+                                            .frame(width: 40, height: 50)
+                                            .clipShape(.circle)
+                                            .padding(.trailing, 10)
+                                            .padding(.bottom, 25)
+                                    }
+
+                                }
+                                else {
+                                    NavigationLink{
+                                        OrgaProfileView(org: org)
+                                    } label : {
+                                        KFImage(URL(string: org.img))
+                                            .resizable()
+                                            .frame(width: 40, height: 50)
+                                            .clipShape(.circle)
+                                            .padding(.trailing, 10)
+                                            .padding(.bottom, 25)
+                                    }
                                 }
                             }
                         }.frame(height: geo.size.height/11)
@@ -60,9 +79,6 @@ struct HomeView: View {
                                     .frame(height: 10*geo.size.height/11)
                             }
                             
-                        }
-                        .onAppear{
-                            publicationModel.fetchPublications(id_user: "6524dfe1d805c888097581fd")
                         }
                     }
                 }

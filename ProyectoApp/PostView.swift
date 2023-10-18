@@ -43,6 +43,7 @@ struct PostView: View {
         VStack {
             Text("Nueva publicación")
                 .font(.title)
+                .bold()
                 .padding()
             
             TextField("Titulo de la publicacion", text: $title)
@@ -56,7 +57,8 @@ struct PostView: View {
             
             if let selectedMediaPreview = selectedMediaPreview {
                 selectedMediaPreview
-                    .frame(height: 100)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 300, height: 200)
                     .cornerRadius(10)
                     .padding()
             }
@@ -78,7 +80,9 @@ struct PostView: View {
                                    selectedMediaPreview = AnyView(VideoPlayer(player: AVPlayer(url: mediaURL)))
                                } else {
                                    mediaType = .photo
-                                   selectedMediaPreview = AnyView(Image(uiImage: UIImage(contentsOfFile: mediaURL.path) ?? UIImage(systemName: "photo")!))
+                                   selectedMediaPreview = AnyView(Image(uiImage: UIImage(contentsOfFile: mediaURL.path) ?? UIImage(systemName: "photo")!)
+                                    .resizable()
+                                   )
 
                                }
                                selectedMediaURL = mediaURL

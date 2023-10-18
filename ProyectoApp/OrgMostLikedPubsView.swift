@@ -51,12 +51,6 @@ struct OrgMostLikedPubsView: View {
                 }
             }.frame(alignment: .leading)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    // Agregar más botones de etiquetas según sea necesario
-                }
-            }
-            
             ZStack {
                 Color.white
                     .cornerRadius(10)
@@ -68,12 +62,7 @@ struct OrgMostLikedPubsView: View {
                             ForEach(org.mostLikedPubs) { pub in
                                 NavigationLink(destination: PublicationDetailView(upvote: $upvote, downvote: $downvote ,publication: pub)){
                                     if(pub.media_type == "mp4"){
-                                        if let videoURL = URL(string: pub.media) {
-                                            VideoPlayer(player: AVPlayer(url: videoURL))
-                                                .frame(height: 180)
-                                        } else {
-                                            Text("Invalid video URL")
-                                        }
+                                        SmallVideoPlayerView(link: URL(string: pub.media)!)
                                     }
                                     else{
                                         KFImage(URL(string: pub.media))
@@ -84,7 +73,6 @@ struct OrgMostLikedPubsView: View {
                                     }
                                 }
                             }
-                            VideoPlayer(player: AVPlayer(url: URL(string: "https://firebasestorage.googleapis.com:443/v0/b/united-society-fad81.appspot.com/o/publications%2F986E973E-BFE2-40FB-B89B-ED75CDBBD647?alt=media&token=9540a694-1b01-4977-961f-87c3ea470b40")!))
                         }
                     }
                     .frame(height: 170)

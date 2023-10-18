@@ -19,8 +19,9 @@ final class User {
     var location: String
     var age: Int
     var img: String
+    var rol: String
     
-    init(user_id: String, name: String, tags: [String], number: String, last_name: String, location: String, age: Int, img: String) {
+    init(user_id: String, name: String, tags: [String], number: String, last_name: String, location: String, age: Int, img: String, rol: String) {
         self.user_id = user_id
         self.name = name
         self.tags = tags
@@ -29,6 +30,7 @@ final class User {
         self.location = location
         self.age = age
         self.img = img
+        self.rol = rol
     }
 }
 

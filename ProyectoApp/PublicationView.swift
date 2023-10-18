@@ -75,46 +75,64 @@ struct PublicationView: View {
                                 .frame(height: 180)
                         }
                         HStack {
-                            Button(action: { like() }) {
-                                if upvote {
-                                    Image("ArrowClicked")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .padding(.leading)
-                                        .tint(.blue)
-                                } else {
-                                    Image("Arrow")
+                            if(user[0].rol == "Usuario"){
+                                Button(action: { like() }) {
+                                    if upvote {
+                                        Image("ArrowClicked")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .padding(.leading)
+                                            .tint(.blue)
+                                    } else {
+                                        Image("Arrow")
+                                            .resizable()
+                                            .frame(height: 20)
+                                            .frame(width: 20)
+                                            .padding(.leading)
+                                    }
+                                }
+                                Text(String(publication.likes))
+                                Button(action: { dislike() }) {
+                                    if downvote {
+                                        Image("ArrowClicked")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .rotationEffect(Angle(degrees: 180))
+                                    } else {
+                                        Image("Arrow")
+                                            .resizable()
+                                            .frame(height: 20)
+                                            .frame(width: 20)
+                                            .rotationEffect(Angle(degrees: 180))
+                                    }
+                                }
+                                Button {
+                                    postComment.toggle()
+                                } label: {
+                                    Text("Comentarios")
+                                    Text(String(publication.comments))
+                                    Image("CommentIcon")
                                         .resizable()
                                         .frame(height: 20)
                                         .frame(width: 20)
-                                        .padding(.leading)
                                 }
                             }
-                            Text(String(publication.likes))
-                            Button(action: { dislike() }) {
-                                if downvote {
-                                    Image("ArrowClicked")
-                                        .resizable()
-                                        .frame(width: 20, height: 20)
-                                        .rotationEffect(Angle(degrees: 180))
-                                } else {
-                                    Image("Arrow")
+                            else {
+                                Text("Likes: ")
+                                    .padding(.leading, 10)
+                                Text(String(publication.likes))
+                                Button {
+                                    postComment.toggle()
+                                } label: {
+                                    Text("Comentarios")
+                                    Text(String(publication.comments))
+                                    Image("CommentIcon")
                                         .resizable()
                                         .frame(height: 20)
                                         .frame(width: 20)
-                                        .rotationEffect(Angle(degrees: 180))
                                 }
+                                Spacer()
                             }
-                            Button {
-                                postComment.toggle()
-                            } label: {
-                                Image("CommentIcon")
-                                    .resizable()
-                                    .frame(height: 20)
-                                    .frame(width: 20)
-                            }
-                            Text(String(publication.comments))
-                            Text("Comentarios")
                             Spacer()
                         }
                 //        HStack {

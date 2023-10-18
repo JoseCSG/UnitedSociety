@@ -21,7 +21,7 @@ class PublicationModel {
     let storage = Storage.storage()
     let headers = [ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5NzMyNTYsImV4cCI6MTY5NzgzNzI1NiwidXNlcm5hbWUiOiJqY3NnIiwiZW1haWwiOiJlbWFpbCJ9.z9yU_sAdwzEkkg1XQfYrkUCAhYkDbbuEHoWlJZgdcAA", "Accept": "application/json", "Content-Type": "application/json" ]
     
-    func fetchPublications(id_user: String){
+    func fetchPublications(id_user: String) async{
         publications.removeAll()
         let url = "http://127.0.0.1:5000/publication/\(id_user)"
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
