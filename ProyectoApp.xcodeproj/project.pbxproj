@@ -104,6 +104,7 @@
 		FBD9D0A72ADDDEB10031927A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0A62ADDDEB10031927A /* User.swift */; };
 		FBD9D0A92ADDE5DD0031927A /* OrganizationStructSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0A82ADDE5DD0031927A /* OrganizationStructSmall.swift */; };
 		FBD9D0AB2ADDEB680031927A /* PublicationSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0AA2ADDEB670031927A /* PublicationSmallView.swift */; };
+		FBD9D0AE2ADF5E880031927A /* MediaPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBD9D0AD2ADF5E880031927A /* MediaPicker */; };
 		FBF6CE422AD68BA6007063D5 /* PostCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */; };
 		FBF6CE442AD7262D007063D5 /* PublicationCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE432AD7262D007063D5 /* PublicationCommentsView.swift */; };
 		FBF6CE462AD8A726007063D5 /* OrgMostLikedPubsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE452AD8A726007063D5 /* OrgMostLikedPubsView.swift */; };
@@ -212,6 +213,7 @@
 				FB4FE4352AD496C80099C351 /* FirebasePerformance in Frameworks */,
 				FB4FE3E52AD496B10099C351 /* FirebaseCrashlytics in Frameworks */,
 				FB4FE3EB2AD496B10099C351 /* FirebaseDynamicLinks in Frameworks */,
+				FBD9D0AE2ADF5E880031927A /* MediaPicker in Frameworks */,
 				FB4FE4072AD496B10099C351 /* FirebaseStorage in Frameworks */,
 				FB4FE4252AD496C80099C351 /* FirebaseFirestoreSwift in Frameworks */,
 				FB4FE3F72AD496B10099C351 /* FirebaseInAppMessaging-Beta in Frameworks */,
@@ -413,6 +415,7 @@
 				FB4FE4382AD496C80099C351 /* FirebaseRemoteConfigSwift */,
 				FB4FE43A2AD496C80099C351 /* FirebaseStorage */,
 				FB4FE43C2AD496C80099C351 /* FirebaseStorageCombine-Community */,
+				FBD9D0AD2ADF5E880031927A /* MediaPicker */,
 			);
 			productName = ProyectoApp;
 			productReference = FB96BD192AB90CA80069DD90 /* ProyectoApp.app */;
@@ -447,6 +450,7 @@
 				FB5537132ACF7FCD008553E4 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				FB4FE3CC2AD48FED0099C351 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				FB4FE3D12AD4941B0099C351 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				FBD9D0AC2ADF5E880031927A /* XCRemoteSwiftPackageReference "SwiftUI-MediaPicker" */,
 			);
 			productRefGroup = FB96BD1A2AB90CA80069DD90 /* Products */;
 			projectDirPath = "";
@@ -757,6 +761,14 @@
 				minimumVersion = 5.0.1;
 			};
 		};
+		FBD9D0AC2ADF5E880031927A /* XCRemoteSwiftPackageReference "SwiftUI-MediaPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/UWAppDev/SwiftUI-MediaPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1044,6 +1056,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FB5537132ACF7FCD008553E4 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		FBD9D0AD2ADF5E880031927A /* MediaPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBD9D0AC2ADF5E880031927A /* XCRemoteSwiftPackageReference "SwiftUI-MediaPicker" */;
+			productName = MediaPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -8,6 +8,7 @@
 import SwiftUI
 import Alamofire
 import PhotosUI
+import MediaPicker
 
 struct PostView: View {
     
@@ -19,6 +20,28 @@ struct PostView: View {
     @State var id: String
     @Binding var publicationModel: PublicationModel
     @Binding var showAddPub: Bool
+    @State var isShowingMediaPicker: Bool = false
+    @State var urls: [URL] = []
+
+    var selectButton: some View {
+        Button(action: {isShowingMediaPicker = true}, label: {
+            Image(systemName: "photo.on.rectangle")
+                .font(.largeTitle)
+                .foregroundColor(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
+        })
+            .mediaImporter(isPresented: $isShowingMediaPicker,
+                           allowedMediaTypes: .all,
+                           allowsMultipleSelection: true) { result in
+                switch result {
+                case .success(let urls):
+                    self.urls = urls
+                case .failure(let error):
+                    print(error)
+                    self.urls = []
+                }
+            }
+        }
+    
     var body: some View {
         VStack {
             Text("Nueva publicación")
@@ -63,6 +86,7 @@ struct PostView: View {
                     .font(.largeTitle)
                     .foregroundColor(Color(red: 32.0/255, green: 226.0/255, blue: 165.0/255))
             }
+            selectButton
             HStack{
                 Spacer()
                 Button(action: {
