@@ -176,7 +176,9 @@ struct OrgaProfileView: View {
         }
         .ignoresSafeArea()
         .onAppear {
-            publicationModel.fetchPublicationsOrg(id: org.id)
+            Task{
+                await publicationModel.fetchPublicationsOrg(id: org.id)
+            }
         }
     }
 }

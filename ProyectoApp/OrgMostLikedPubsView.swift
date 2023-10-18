@@ -7,11 +7,14 @@
 
 import SwiftUI
 import Kingfisher
+import AVFoundation
+import _AVKit_SwiftUI
 
 struct OrgMostLikedPubsView: View {
     @State var org: Organization
     @State var upvote: Bool = false
     @State var downvote: Bool  = false
+    @State private var selectedMediaPreview: AnyView? = nil
 
     var body: some View {
         VStack(alignment:.leading){
@@ -64,13 +67,24 @@ struct OrgMostLikedPubsView: View {
                         if(!org.mostLikedPubs.isEmpty){
                             ForEach(org.mostLikedPubs) { pub in
                                 NavigationLink(destination: PublicationDetailView(upvote: $upvote, downvote: $downvote ,publication: pub)){
-                                    KFImage(URL(string: pub.img))
-                                        .resizable()
-                                        .frame(width: 150, height: 150)
-                                        .cornerRadius(10)
-                                        .aspectRatio(contentMode: .fill)
+                                    if(pub.media_type == "mp4"){
+                                        if let videoURL = URL(string: pub.media) {
+                                            VideoPlayer(player: AVPlayer(url: videoURL))
+                                                .frame(height: 180)
+                                        } else {
+                                            Text("Invalid video URL")
+                                        }
+                                    }
+                                    else{
+                                        KFImage(URL(string: pub.media))
+                                            .resizable()
+                                            .frame(width: 150, height: 150)
+                                            .cornerRadius(10)
+                                            .aspectRatio(contentMode: .fill)
+                                    }
                                 }
                             }
+                            VideoPlayer(player: AVPlayer(url: URL(string: "https://firebasestorage.googleapis.com:443/v0/b/united-society-fad81.appspot.com/o/publications%2F986E973E-BFE2-40FB-B89B-ED75CDBBD647?alt=media&token=9540a694-1b01-4977-961f-87c3ea470b40")!))
                         }
                     }
                     .frame(height: 170)

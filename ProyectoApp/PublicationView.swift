@@ -1,4 +1,6 @@
 import SwiftUI
+import _AVKit_SwiftUI
+import AVFoundation
 import Kingfisher
 import SwiftData
 
@@ -63,9 +65,15 @@ struct PublicationView: View {
                                 .padding(.bottom, 1)
                             Spacer()
                         }
-                        KFImage(URL(string: publication.img))
-                            .resizable()
-                            .frame(height: 180)
+                        if(publication.media_type == "mp4"){
+                            VideoPlayer(player: AVPlayer(url: URL(string: publication.media)!))
+                                .frame(height: 180)
+                        }
+                        else{
+                            KFImage(URL(string: publication.media))
+                                .resizable()
+                                .frame(height: 180)
+                        }
                         HStack {
                             Button(action: { like() }) {
                                 if upvote {

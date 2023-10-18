@@ -24,7 +24,7 @@ class OrganizationModel {
             for org in json {
                 var pubs = [Publication]()
                 for pub in org.1["pubs"]{
-                    let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue)
+                    let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue)
                     pubs.append(publication)
                 }
                 let tagsArray = org.1["org"]["tags"].arrayValue.map{$0.stringValue}
@@ -42,7 +42,7 @@ class OrganizationModel {
             for org in json {
                 var pubs = [Publication]()
                 for pub in org.1["pubs"]{
-                    let publication = Publication(title: pub.1["title"].stringValue, img: pub.1["img_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue)
+                    let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue)
                     pubs.append(publication)
                 }
                 let tagsArray = org.1["org"]["tags"].arrayValue.map{$0.stringValue}

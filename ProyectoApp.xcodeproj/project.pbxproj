@@ -93,6 +93,7 @@
 		FB96BD2B2AB90CB40069DD90 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB96BD2A2AB90CB40069DD90 /* HomeView.swift */; };
 		FB96BD2D2AB91C7F0069DD90 /* PublicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB96BD2C2AB91C7F0069DD90 /* PublicationView.swift */; };
 		FB96BD302ABA5AB20069DD90 /* PublicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB96BD2F2ABA5AB20069DD90 /* PublicationModel.swift */; };
+		FBB579BB2ADF633C0014350B /* PostCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB579BA2ADF633C0014350B /* PostCommentView.swift */; };
 		FBD9D0952ADBE2C80031927A /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0942ADBE2C80031927A /* RegisterView.swift */; };
 		FBD9D0972ADBE2DD0031927A /* BackgorundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0962ADBE2DD0031927A /* BackgorundView.swift */; };
 		FBD9D0992ADBE3220031927A /* PickRoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0982ADBE3220031927A /* PickRoleView.swift */; };
@@ -105,7 +106,6 @@
 		FBD9D0A92ADDE5DD0031927A /* OrganizationStructSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0A82ADDE5DD0031927A /* OrganizationStructSmall.swift */; };
 		FBD9D0AB2ADDEB680031927A /* PublicationSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9D0AA2ADDEB670031927A /* PublicationSmallView.swift */; };
 		FBD9D0AE2ADF5E880031927A /* MediaPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBD9D0AD2ADF5E880031927A /* MediaPicker */; };
-		FBF6CE422AD68BA6007063D5 /* PostCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */; };
 		FBF6CE442AD7262D007063D5 /* PublicationCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE432AD7262D007063D5 /* PublicationCommentsView.swift */; };
 		FBF6CE462AD8A726007063D5 /* OrgMostLikedPubsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE452AD8A726007063D5 /* OrgMostLikedPubsView.swift */; };
 		FBF6CE482ADA7FC5007063D5 /* ImageProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF6CE472ADA7FC5007063D5 /* ImageProfileView.swift */; };
@@ -144,6 +144,7 @@
 		FB96BD2A2AB90CB40069DD90 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		FB96BD2C2AB91C7F0069DD90 /* PublicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationView.swift; sourceTree = "<group>"; };
 		FB96BD2F2ABA5AB20069DD90 /* PublicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationModel.swift; sourceTree = "<group>"; };
+		FBB579BA2ADF633C0014350B /* PostCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCommentView.swift; sourceTree = "<group>"; };
 		FBD9D0942ADBE2C80031927A /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		FBD9D0962ADBE2DD0031927A /* BackgorundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgorundView.swift; sourceTree = "<group>"; };
 		FBD9D0982ADBE3220031927A /* PickRoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickRoleView.swift; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		FBD9D0A62ADDDEB10031927A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FBD9D0A82ADDE5DD0031927A /* OrganizationStructSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationStructSmall.swift; sourceTree = "<group>"; };
 		FBD9D0AA2ADDEB670031927A /* PublicationSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationSmallView.swift; sourceTree = "<group>"; };
-		FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCommentView.swift; path = ../../../../Downloads/PostCommentView.swift; sourceTree = "<group>"; };
 		FBF6CE432AD7262D007063D5 /* PublicationCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationCommentsView.swift; sourceTree = "<group>"; };
 		FBF6CE452AD8A726007063D5 /* OrgMostLikedPubsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgMostLikedPubsView.swift; sourceTree = "<group>"; };
 		FBF6CE472ADA7FC5007063D5 /* ImageProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProfileView.swift; sourceTree = "<group>"; };
@@ -255,7 +255,6 @@
 			children = (
 				FB96BD1E2AB90CA80069DD90 /* ContentView.swift */,
 				FBD9D0932ADBE2B90031927A /* Register */,
-				FBF6CE412AD68BA6007063D5 /* PostCommentView.swift */,
 				FB96BD1C2AB90CA80069DD90 /* ProyectoAppApp.swift */,
 				D28A629D2AC251A700D03286 /* TabView.swift */,
 				FB55370D2AC65090008553E4 /* PublicationDetailView.swift */,
@@ -284,6 +283,7 @@
 				FBF6CE4B2ADA7FFC007063D5 /* FollowView.swift */,
 				FBD9D0962ADBE2DD0031927A /* BackgorundView.swift */,
 				FBD9D0AA2ADDEB670031927A /* PublicationSmallView.swift */,
+				FBB579BA2ADF633C0014350B /* PostCommentView.swift */,
 			);
 			path = ProyectoApp;
 			sourceTree = "<group>";
@@ -504,10 +504,10 @@
 				FB55370E2AC65091008553E4 /* PublicationDetailView.swift in Sources */,
 				FBF6CE4A2ADA7FDE007063D5 /* EditProfileView.swift in Sources */,
 				D28A62A42AC251CB00D03286 /* Item.swift in Sources */,
-				FBF6CE422AD68BA6007063D5 /* PostCommentView.swift in Sources */,
 				FB0151112ADB4FC4007C9AC1 /* AboutUs.swift in Sources */,
 				FB5537102ACB9225008553E4 /* CommentView.swift in Sources */,
 				D28A62A22AC251C500D03286 /* TabItem.swift in Sources */,
+				FBB579BB2ADF633C0014350B /* PostCommentView.swift in Sources */,
 				FB96BD1D2AB90CA80069DD90 /* ProyectoAppApp.swift in Sources */,
 				FBD9D09C2ADBE3AE0031927A /* TagUser.swift in Sources */,
 				FBD9D0AB2ADDEB680031927A /* PublicationSmallView.swift in Sources */,
