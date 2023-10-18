@@ -99,7 +99,7 @@ struct OrgaProfileView: View {
                 
                 .padding(.vertical, 5)
                 HStack {
-                    if (userRol == "Asociacion" && org.id == user[0].user_id){
+                    if (userRol == "Asociacion" && org.id == user.last!.user_id){
                         NavigationLink(destination: EditOrgaProfileView(org: org)) {
                             Text("Editar Perfil")
                                 .font(.headline)
@@ -203,7 +203,7 @@ struct OrgaProfileView: View {
         .onAppear {
             Task{
                 await publicationModel.fetchPublicationsOrg(id: org.id)
-                userRol = user[0].rol
+                userRol = user.last!.rol
                 following = org.followed
                 print(publicationModel.publications)
             }

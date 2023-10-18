@@ -59,7 +59,7 @@ struct LogInView: View {
                         print("Número de teléfono completo: \(fullPhoneNumber)")
                         isNavigating = true
                     }) {
-                        NavigationLink(destination: HomeView(feed: true, publicationModel: $publicationModel)) {
+                        NavigationLink(destination: HomeView(feed: false, publicationModel: $publicationModel)) {
                             Text("Log In")
                                 .foregroundColor(.black)
                                 .fontWeight(.bold)

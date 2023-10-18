@@ -18,21 +18,21 @@ struct ProfileView: View {
             ScrollView(.vertical){
                 VStack {
                     HStack {
-                        ImageProfileView(imageName: user[0].img)
+                        ImageProfileView(imageName: user.last!.img)
                             .frame(width: 90, height: 90)
                             .padding(.horizontal, 20)
                         
                         VStack(alignment: .leading) {
-                            Text(user[0].name)
+                            Text(user.last!.name)
                                 .font(.title)
                                 .bold()
                                 .foregroundColor(.black)
                             
-                            Text(user[0].location)
+                            Text(user.last!.location)
                                 .font(.subheadline)
                                 .foregroundColor(.black)
                             
-                            Text(String(user[0].age))
+                            Text(String(user.last!.age))
                                 .font(.subheadline)
                                 .foregroundColor(.black)
                         }
@@ -58,7 +58,7 @@ struct ProfileView: View {
                                     .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
                                 
                                 HStack {
-                                    ForEach(user[0].tags, id: \.self) { tag in
+                                    ForEach(user.last!.tags, id: \.self) { tag in
                                         Text(tag)
                                             .font(.subheadline)
                                             .foregroundColor(.black)
@@ -127,7 +127,7 @@ struct ProfileView: View {
             .ignoresSafeArea()
             .onAppear{
                 if(!user.isEmpty){
-                    publicationModel.fetchPublicationsUser(id_user: user[0].user_id)
+                    publicationModel.fetchPublicationsUser(id_user: user.last!.user_id)
                 }
             }
         }

@@ -20,17 +20,19 @@ struct HomeView: View {
                                     .padding(.leading, 20)
                                     .padding(.bottom, 25)
                                 Spacer()
-                                Button {
-                                    feed = true;
-                                    Task{
-                                        await publicationModel.fetchPublications(id_user: "6524dfe1d805c888097581fd")
+                                if user.last!.rol == "Usuario"{
+                                    Button {
+                                        feed = true;
+                                        Task{
+                                            await publicationModel.fetchPublications(id_user: "6524dfe1d805c888097581fd")
+                                        }
+                                    } label: {
+                                        Text("Siguiendo")
+                                            .padding(.trailing, 40)
+                                            .bold()
+                                            .tint(.black)
+                                            .modifier(SelectedStyleFollow(isSelected: feed))
                                     }
-                                } label: {
-                                    Text("Siguiendo")
-                                        .padding(.trailing, 40)
-                                        .bold()
-                                        .tint(.black)
-                                        .modifier(SelectedStyleFollow(isSelected: feed))
                                 }
                                 Spacer()
                                 Button {
@@ -42,11 +44,11 @@ struct HomeView: View {
                                         .modifier(SelectedStyleOrgs(isSelected: !feed))
                                 }
                                 Spacer()
-                                if(user[0].rol == "Usuario"){
+                                if(user.last!.rol == "Usuario"){
                                     NavigationLink{
                                         ProfileView()
                                     } label: {
-                                        KFImage(URL(string: user[0].img))
+                                        KFImage(URL(string: user.last!.img))
                                             .resizable()
                                             .frame(width: 40, height: 50)
                                             .clipShape(.circle)

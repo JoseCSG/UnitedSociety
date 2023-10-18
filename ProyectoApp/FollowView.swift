@@ -41,7 +41,7 @@ struct FollowView: View {
                             .padding()
                         ScrollView{
                             ForEach(userModel.orgsFollowed){ org in
-                                PublicationSmallView(img: org.img, name: org.name, id: org.id, userModel: $userModel, id_user: user[0].user_id)
+                                PublicationSmallView(img: org.img, name: org.name, id: org.id, userModel: $userModel, id_user: user.last!.user_id)
                             }
                             
                         }

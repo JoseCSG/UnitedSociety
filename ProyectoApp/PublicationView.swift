@@ -64,7 +64,7 @@ struct PublicationView: View {
                                 .padding(.bottom, 1)
                             Spacer()
                         }
-                        if(publication.media_type == "mp4"){
+                        if(publication.media_type == "mp4" || publication.media_type == "mov"){
                             VideoPlayer(player: AVPlayer(url: URL(string: publication.media)!))
                                 .frame(height: 180)
                         }
@@ -74,7 +74,7 @@ struct PublicationView: View {
                                 .frame(height: 180)
                         }
                         HStack {
-                            if(user[0].rol == "Usuario"){
+                            if(user.last!.rol == "Usuario"){
                                 Button(action: { like() }) {
                                     if upvote {
                                         Image("ArrowClicked")
@@ -154,7 +154,7 @@ struct PublicationView: View {
                 }
             }
             .sheet(isPresented: $postComment, content: {
-                PostCommentView(id_pub: publication._id_mongo, id_user: user[0].user_id, publicationModel: $publicationModel, postComment: $postComment)
+                PostCommentView(id_pub: publication._id_mongo, id_user: user.last!.user_id, publicationModel: $publicationModel, postComment: $postComment)
                     .presentationDetents([.medium])
             })
         }

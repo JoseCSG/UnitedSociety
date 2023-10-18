@@ -23,7 +23,7 @@ struct EditProfileView: View {
     var body: some View {
         NavigationView {
             VStack{
-                ImageProfileView(imageName: user[0].img)
+                ImageProfileView(imageName: user.last!.img)
                     .frame(width: 200, height: 200)
                 
                 Text(name)

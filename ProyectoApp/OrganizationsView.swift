@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import SwiftData
 
 struct OrganizationsView: View {
     var dummyPublication = Publication.dummy
@@ -14,6 +15,7 @@ struct OrganizationsView: View {
     @State var upvote: Bool = false
     @State var downvote: Bool = false
     var organizationModel = OrganizationModel()
+    @Query private var user: [User]
     var body: some View {
         NavigationView{
             VStack{
@@ -70,12 +72,14 @@ struct OrganizationsView: View {
                                     HStack(spacing: 10){
                                         if(!organizationModel.organizations.isEmpty){
                                             ForEach(organizationModel.organizations){ org in
-                                                NavigationLink(destination: OrgaProfileView(org: org)){
-                                                    KFImage(URL(string: org.img))
-                                                        .resizable()
-                                                        .frame(width: 100, height: 100)
-                                                        .clipShape(Circle())
-                                                        .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                                if org.id != user.last!.user_id{
+                                                    NavigationLink(destination: OrgaProfileView(org: org)){
+                                                        KFImage(URL(string: org.img))
+                                                            .resizable()
+                                                            .frame(width: 100, height: 100)
+                                                            .clipShape(Circle())
+                                                            .shadow(color: Color.black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                                    }
                                                 }
                                             }
                                         }

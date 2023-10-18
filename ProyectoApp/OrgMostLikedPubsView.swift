@@ -61,7 +61,7 @@ struct OrgMostLikedPubsView: View {
                         if(!org.mostLikedPubs.isEmpty){
                             ForEach(org.mostLikedPubs) { pub in
                                 NavigationLink(destination: PublicationDetailView(upvote: $upvote, downvote: $downvote ,publication: pub)){
-                                    if(pub.media_type == "mp4"){
+                                    if(pub.media_type == "mp4" || pub.media_type == "mov"){
                                         SmallVideoPlayerView(link: URL(string: pub.media)!)
                                     }
                                     else{
