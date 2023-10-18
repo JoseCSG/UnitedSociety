@@ -13,7 +13,6 @@ struct PublicationView: View {
     @Query private var user: [User]
     
     func like() {
-        print(publication.title)
         if !upvote {
             publication.likes += 1
             publicationModel.likePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
@@ -158,6 +157,11 @@ struct PublicationView: View {
                 PostCommentView(id_pub: publication._id_mongo, id_user: user[0].user_id, publicationModel: $publicationModel, postComment: $postComment)
                     .presentationDetents([.medium])
             })
+        }
+        .onAppear{
+            if(publication.liked){
+                upvote = true
+            }
         }
     }
 }

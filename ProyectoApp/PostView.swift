@@ -71,33 +71,32 @@ struct PostView: View {
                 }
             }
             .onChange(of: selectedMediaItem) { newMediaItem in
-                   Task {
-                       if let mediaItem = newMediaItem {
-                           do {
-                               let mediaURL = try await getURL(item: mediaItem)
-                               if mediaURL.pathExtension.lowercased() == "mp4" {
-                                   mediaType = .video
-                                   selectedMediaPreview = AnyView(VideoPlayer(player: AVPlayer(url: mediaURL)))
-                               } else {
-                                   mediaType = .photo
-                                   selectedMediaPreview = AnyView(Image(uiImage: UIImage(contentsOfFile: mediaURL.path) ?? UIImage(systemName: "photo")!)
+                Task {
+                    if let mediaItem = newMediaItem {
+                        do {
+                            let mediaURL = try await getURL(item: mediaItem)
+                            if mediaURL.pathExtension.lowercased() == "mp4" {
+                                mediaType = .video
+                                selectedMediaPreview = AnyView(VideoPlayer(player: AVPlayer(url: mediaURL)))
+                            } else {
+                                mediaType = .photo
+                                selectedMediaPreview = AnyView(Image(uiImage: UIImage(contentsOfFile: mediaURL.path) ?? UIImage(systemName: "photo")!)
                                     .resizable()
-                                   )
-
-                               }
-                               selectedMediaURL = mediaURL
-                           } catch {
-                               print("Error getting media URL: \(error)")
-                           }
-                       }
-                   }
-               }
+                                )
+                                
+                            }
+                            selectedMediaURL = mediaURL
+                        } catch {
+                            print("Error getting media URL: \(error)")
+                        }
+                    }
+                }
+            }
             
             HStack {
                 Spacer()
                 Button(action: {
                     addPub()
-                    print("Add pub")
                 }) {
                     Text("Enviar")
                         .foregroundColor(.white)
@@ -118,12 +117,18 @@ struct PostView: View {
                 Spacer()
             }
         }
+        .onDisappear{
+            Task {
+                await publicationModel.fetchPublicationsOrg(id: id)
+            }
+        }
     }
+    
     
     private func addPub() {
         Task {
             await publicationModel.postPublication(title: title, description: description, mediaURL: selectedMediaURL!, org_id: id)
-            await publicationModel.fetchPublicationsOrg(id: id)
+            print(publicationModel.publications)
             showAddPub.toggle()
         }
     }

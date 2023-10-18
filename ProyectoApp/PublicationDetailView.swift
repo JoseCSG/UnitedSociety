@@ -13,7 +13,6 @@ struct PublicationDetailView: View {
     @Query private var user: [User]
     
     func like() {
-        print(publication.title)
         if !upvote {
             publication.likes += 1
             publicationModel.likePub(id_pub: publication._id_mongo, id_user: "6524dfe1d805c888097581fd")
@@ -176,6 +175,9 @@ struct PublicationDetailView: View {
         .onAppear{
             Task{
                 await publicationModel.fetchCommentsPub(id: publication._id_mongo)
+            }
+            if(publication.liked){
+                upvote = true
             }
         }
     }

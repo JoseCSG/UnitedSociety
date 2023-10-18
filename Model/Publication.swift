@@ -28,7 +28,7 @@ class PublicationModel {
             let json = try! JSON(data: data.data!)
             for pub in json {
                 let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue,
-                                              id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue
+                                              id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue, liked: pub.1["liked"].boolValue
                 )
                 self.publications.append(publication)
             }
@@ -43,7 +43,7 @@ class PublicationModel {
         AF.request(url, method: .get ,encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue)
+                let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue, liked: pub.1["liked"].boolValue)
                 self.publications.append(publication)
             }
         }
@@ -55,13 +55,13 @@ class PublicationModel {
         AF.request(url, method: .get ,encoding: URLEncoding.default, headers: HTTPHeaders(headers)).responseData { data in
             let json = try! JSON(data: data.data!)
             for pub in json {
-                let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue)
+                let publication = Publication(title: pub.1["title"].stringValue, media: pub.1["media_url"].stringValue, likes: pub.1["likes"].intValue, descption: pub.1["description"].stringValue, _id_mongo: pub.1["_id"]["$oid"].stringValue, id_user: pub.1["user_id"].stringValue, comments: pub.1["comments"].intValue, img_org: pub.1["img_org"].stringValue, media_type: pub.1["media_type"].stringValue, liked: pub.1["liked"].boolValue)
                 self.publications.append(publication)
             }
         }
     }
     
-    func uploadToFirestore(mediaURL: URL, name: String, completion: @escaping (URL?) -> Void) {
+    func uploadToFirestore(mediaURL: URL, name: String, completion: @escaping (URL?) -> Void) async {
         let storageRef = storage.reference().child("publications/\(name)")
 
         // Prepare the metadata for the file based on its type (photo or video)
@@ -97,7 +97,7 @@ class PublicationModel {
 
     func postPublication(title: String, description: String, mediaURL: URL, org_id: String) async {
         let imageName = UUID().uuidString // Generating a unique name for the media
-        uploadToFirestore(mediaURL: mediaURL, name: imageName) { [weak self] downloadURL in
+        await uploadToFirestore(mediaURL: mediaURL, name: imageName) { [weak self] downloadURL in
             guard let self = self, let mediaURLdownload = downloadURL else {
                 print("Error getting download URL.")
                 return
@@ -111,9 +111,7 @@ class PublicationModel {
                 "org_id": org_id,
                 "media_url": mediaURLdownload.absoluteString,
                 "media_type": mediaURL.pathExtension
-            ]
-            print(parameters)
-            
+            ]            
             AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: HTTPHeaders(self.headers)).response { res in
                 switch res.result {
                 case .success(let data):

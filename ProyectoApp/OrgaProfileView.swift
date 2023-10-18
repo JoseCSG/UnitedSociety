@@ -18,7 +18,7 @@ struct OrgaProfileView: View {
     @State var org: Organization
     @Query private var user: [User]
     @State var userRol = ""
-    @State var following = false
+    @State var following: Bool = false
     let vision = "Fomentamos la participación ciudadana vinculando, desarrollando, empoderando a ONGs y líderes sociales con el fin de sumar al bienestar de todos"
     
     var body: some View {
@@ -134,9 +134,17 @@ struct OrgaProfileView: View {
                         }
                         
                         Button {
-                            organizationModel.followOrg(id_usuario: "6524dfe1d805c888097581fd", id_org: org.id)
-                            org.followers += 1
-                            following.toggle()
+                            if !following{
+                                organizationModel.followOrg(id_usuario: "6524dfe1d805c888097581fd", id_org: org.id)
+                                org.followers += 1
+                                following.toggle()
+                            }
+                            else {
+                                organizationModel.unfollowOrg(id_usuario: "6524dfe1d805c888097581fd", id_org: org.id)
+                                org.followers -= 1
+                                following.toggle()
+                            }
+
                         } label: {
                             if following {
                                 Text("Dejar de seguir")
@@ -179,6 +187,7 @@ struct OrgaProfileView: View {
                         ForEach(publicationModel.publications) { pub in
                             PublicationView(publication: pub)
                                 .foregroundColor(.black)
+                            
                         }
                         .ignoresSafeArea()
                         
@@ -194,8 +203,11 @@ struct OrgaProfileView: View {
         .onAppear {
             Task{
                 await publicationModel.fetchPublicationsOrg(id: org.id)
+                userRol = user[0].rol
+                following = org.followed
+                print(publicationModel.publications)
             }
-            userRol = user[0].rol
+
         }
     }
 }

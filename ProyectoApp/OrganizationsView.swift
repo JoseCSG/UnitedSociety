@@ -36,7 +36,7 @@ struct OrganizationsView: View {
                                 }
                                 else{
                                     Task{
-                                        await                                     organizationModel.fetchOrganizationsName(name: searchText)
+                                        await                                     organizationModel.fetchOrganizationsName(name: searchText, id_user: "6524dfe1d805c888097581fd")
 
                                     }
                                 }
